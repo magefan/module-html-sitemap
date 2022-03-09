@@ -11,6 +11,7 @@
             <general>
                 <enabled>1</enabled>
                 <mfmodule>HtmlSitemap</mfmodule>
+                <mftype>1</mftype>
                 <displayin>1,2</displayin>
                 <openlinks>1</openlinks>
             </general>
