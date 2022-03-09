@@ -1,0 +1,17 @@
+{
+    "name": "magefan/module-html-sitemap",
+    "description": "HTML Sitemap extension for Magento 2",
+    "require": {
+        "magefan/module-community" : ">=2.1.8"
+    },
+    "type": "magento2-module",
+    "version": "2.0.0",
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Magefan\\HtmlSitemap\\": ""
+        }
+    }
+}

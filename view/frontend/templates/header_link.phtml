@@ -1,0 +1,26 @@
+<?php
+/**
+ * Copyright © Magefan (support@magefan.com). All rights reserved.
+ * Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+ */
+
+/**
+ * @var $block \Magefan\HtmlSitemap\Block\Link
+ */
+?>
+
+<?php
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$config = $objectManager->create(\Magefan\HtmlSitemap\Model\Config::class);
+$displayInArray = explode(',', $config->displayIn());
+$openLinks = ($block->getOpenLinks() == 1) ? '' : 'target="_blank"';
+?>
+<?php if ($config->isEnabled()): ?>
+    <?php if (in_array('1', $displayInArray)): ?>
+    <li>
+        <a href="<?= $block->escapeUrl($block->getHref()) ?>" name="header_htmlsitemap_link"<?= $openLinks ?>>
+            <?= $block->escapeHtml($block->getLabel()) ?>
+        </a>
+    </li>
+    <?php endif ?>
+<?php endif ?>

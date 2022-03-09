@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magefan (support@magefan.com). All rights reserved.
+ * Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Magento\Downloadable\Controller\Download\Sample" type="Magefan\ThankYouForDownload\Controller\Sample" />
+    <preference for="Magento\Downloadable\Controller\Download\Link" type="Magefan\ThankYouForDownload\Controller\Link" />
+    <preference for="Magento\Downloadable\Controller\Download\LinkSample" type="Magefan\ThankYouForDownload\Controller\LinkSample" />
+</config>

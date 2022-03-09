@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magefan (support@magefan.com). All rights reserved.
+ * Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="header.links">
+            <block class="Magefan\HtmlSitemap\Block\Link" name="header_blog_link" template="Magefan_HtmlSitemap::header_link.phtml" />
+        </referenceBlock>
+    </body>
+    <body>
+        <referenceBlock name="footer_links">
+            <block class="Magefan\HtmlSitemap\Block\Link" name="footer_blog_link" template="Magefan_HtmlSitemap::footer_link.phtml" />
+        </referenceBlock>
+    </body>
+</page>

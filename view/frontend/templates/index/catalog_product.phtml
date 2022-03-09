@@ -1,0 +1,30 @@
+<?php
+/**
+ * Copyright © Magefan (support@magefan.com). All rights reserved.
+ * Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+ */
+?>
+<?php
+/**
+ * @var \Magefan\HtmlSitemap\Block\Catalog\Product $block
+ */
+
+$products = $block->getProductCollection();
+?>
+<?php if (count($products)) { ?>
+<div>
+    <h2><?= $block->escapeHtml(__($block->getBlockTitle())) ?></h2>
+    <br />
+    <?php foreach ($products as $product): ?>
+        <a href="<?= $block->escapeUrl($product->getProductUrl()) ?>">
+            <?=$block->escapeHtml($product->getName()) ?>
+        </a>
+        <br/>
+    <?php endforeach; ?>
+    <?php if ($block->showViewMore()): ?>
+        <a href="<?= $block->escapeUrl($block->getUrl('*/catalog_product/products'))?>">
+            <?= $block->escapeHtml(__('View more'))?>
+        </a>
+    <?php endif; ?>
+</div>
+<?php } ?>

@@ -1,0 +1,28 @@
+<?php
+/**
+ * Copyright © Magefan (support@magefan.com). All rights reserved.
+ * Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+ */
+
+/**
+ * @var $block \Magefan\HtmlSitemap\Block\Additional\Additional
+ */
+?>
+<?php
+$links = $block->getAllLinksArray();
+?>
+<div>
+    <?php /*$block->escapeHtml(__('Hello Magefan_HtmlSitemap::additional/additional.phtml'))*/ ?>
+    <?php if (count($links)): ?>
+        <h2><?= $block->escapeHtml(__($block->getBlockTitle())) ?></h2>
+        <br />
+        <?php foreach ($links as $link): ?>
+            <?php if ($link): ?>
+                <a href="<?= $block->escapeUrl($block->getBaseUrl() . $link['url'])?>">
+                    <?= $block->escapeHtml($link['title'])?>
+                </a>
+                <br />
+            <?php endif; ?>
+        <?php endforeach; ?>
+    <?php endif; ?>
+</div>

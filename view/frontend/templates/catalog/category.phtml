@@ -1,0 +1,46 @@
+<?php
+/**
+ * Copyright © Magefan (support@magefan.com). All rights reserved.
+ * Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+ */
+
+/**
+ * @var $block \Magefan\HtmlSitemap\Block\Catalog\Category
+ */
+?>
+<div>
+    <h2><?= $block->escapeHtml(__($block->getBlockTitle())) ?></h2>
+    <br />
+    <?php $items = $block->getAllGroupedChildes(); ?>
+
+    <?php if (count($items)) { ?>
+        <div class="widget block block-categories" data-bind="scope: 'categories'">
+            <ul class="accordion"  id="accordion-2">
+                <?php
+                $level = 0;
+                $first = true;
+                foreach ($items as $item) {
+                    $newLevel = $item->getLevel();
+                    if ($level == $newLevel && !$first) {
+                        echo '</li>';
+                    }
+                    if ($level < $newLevel) {
+                        echo '<ul>';
+                    }
+                    if ($level > $newLevel) {
+                        for ($i = $level; $i > $newLevel; $i--) {
+                            echo '</ul></li>';
+                        }
+                    } ?>
+                    <li>
+                    <a href="<?= $block->escapeUrl($item->getUrl()) ?>">
+                        <?= $block->escapeHtml($item->getName()) ?>
+                    </a>
+                    <?php
+                    $level = $newLevel;
+                    $first = false;
+                } ?>
+            </ul>
+        </div>
+    <?php } ?>
+</div>

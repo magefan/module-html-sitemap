@@ -1,0 +1,30 @@
+<?php
+/**
+ * Copyright © Magefan (support@magefan.com). All rights reserved.
+ * Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+ */
+?>
+<?php
+/**
+ * @var \Magefan\HtmlSitemap\Block\Blog\Post $block
+ */
+
+$posts = $block->getPostsCollection();
+?>
+<?php if (count($posts)) { ?>
+<div>
+    <h2><?= $block->escapeHtml(__($block->getBlockTitle())) ?></h2>
+    <br />
+    <?php foreach ($posts as $post): ?>
+        <a href="<?= $block->escapeUrl($post->getPostUrl()) ?>">
+            <?= $block->escapeHtml($post->getTitle()) ?>
+        </a>
+        <br />
+    <?php endforeach; ?>
+    <?php if ($block->showViewMore()): ?>
+        <a href="<?= $block->escapeUrl($block->getUrl('*/blog_post/post'))?>">
+            <?= $block->escapeHtml(__('View more'))?>
+        </a>
+    <?php endif; ?>
+</div>
+<?php } ?>
