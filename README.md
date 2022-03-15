@@ -51,6 +51,61 @@ Since the HTML Sitemap page is displayed on the storefront as any other page of 
   <img width="860" height="428" src="https://cm.magefan.com/mf_webp/png/media/catalog/html-sitemap-page-metadata.webp">
 </p>
 
+## Demo
+
+Try out our open demo and if you like our extension **please give us some star on Github ★**
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="middle">
+        Storefront Demo
+      </td>
+      <td align="center" valign="middle">
+        Admin Panel Demo
+      </td align="center" valign="middle">
+    </tr>
+    <tr>
+      <td align="center" valign="middle">
+        <a href="https://seo.demo.magefan.top/htmlsitemap">
+          <img
+            src="https://magefan.com/static/version1520969775/frontend/Magefan/new/en_US/images/product-tab-demo-1.jpg"
+            alt="Magneto 2 HTML Extension Storefront Demo"
+            height="220"
+          >
+        </a>
+      </td>
+      <td align="center" valign="middle">
+        <a href="https://seo.demo.magefan.top/admin/admin/system_config/edit/section/mfhs/">
+          <img
+            src="https://magefan.com/static/version1520969775/frontend/Magefan/new/en_US/images/product-tab-demo-2.jpg"
+            alt="Magneto 2 HTML Extension Admin Panel Demo"
+            height="220"
+          >
+        </a>
+      </td>
+    </tr>
+    <tr>
+      <td align="center" valign="middle">
+        <a href="http://blog.demo.magefan.top/blog/">
+          view
+        </a>
+      </td>
+      <td align="center" valign="middle">
+        <a href="http://blog.demo.magefan.top/admin/">
+          view
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+## Need More Features?
+Please contact us to get a quote
+https://magefan.com/contact
+
+## License
+The code is licensed under [EULA](https://magefan.com/end-user-license-agreement).
+
 ## Documentation
 
 **General**
