@@ -11,4 +11,12 @@
         <column xsi:type="smallint" name="mf_exclude_html_sitemap" unsigned="false" nullable="false" identity="false"
                 default="0" comment="Exclude HTML Sitemap"/>
     </table>
+    <table name="magefan_blog_post">
+        <column xsi:type="smallint" name="mf_exclude_html_sitemap" unsigned="false" nullable="false" identity="false"
+                default="0" comment="Exclude HTML Sitemap"/>
+    </table>
+    <table name="magefan_blog_category">
+        <column xsi:type="smallint" name="mf_exclude_html_sitemap" unsigned="false" nullable="false" identity="false"
+                default="0" comment="Exclude HTML Sitemap"/>
+    </table>
 </schema>

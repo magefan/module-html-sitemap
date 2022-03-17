@@ -60,6 +60,7 @@ class AddMfExcludeHtmlSitemapCategoryAttribute implements DataPatchInterface, Pa
                 'required'   => false,
                 'sort_order' => 100,
                 'global'     => ScopedAttributeInterface::SCOPE_GLOBAL,
+                'default'    => 0,
                 'group'      => 'Search Engine Optimization',
             ]
         );

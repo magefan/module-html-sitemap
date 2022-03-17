@@ -94,7 +94,9 @@ class Post extends Template
         if (!empty($this->ignoredLinks)) {
             $posts->addFieldToFilter('identifier', ['nin' => $this->config->getIgnoredLinks()]);
         }
-        $posts->setPageSize($pageSize);
+
+        $posts->addFieldToFilter('mf_exclude_html_sitemap', 0)
+            ->setPageSize($pageSize);
 
         return $posts;
     }
@@ -110,7 +112,8 @@ class Post extends Template
         if (!empty($this->ignoredLinks)) {
             $posts->addFieldToFilter('identifier', ['nin' => $this->config->getIgnoredLinks()]);
         }
-        $posts->addFieldToFilter('is_active', 1);
+        $posts->addFieldToFilter('is_active', 1)
+            ->addFieldToFilter('mf_exclude_html_sitemap', 0);
 
         return $posts;
     }
