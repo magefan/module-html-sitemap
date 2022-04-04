@@ -97,7 +97,12 @@ class Category extends Template
             if (!empty($this->ignoredLinks)) {
                 $array->addFieldToFilter('identifier', ['nin' => $this->config->getIgnoredLinks()]);
             }
-            $array = $array->setOrder('position')->setPageSize($pageSize)->getTreeOrderedArray();
+
+            $array = $array->addFieldToFilter('mf_exclude_html_sitemap', 0)
+                ->setOrder('position')
+                ->setPageSize($pageSize)
+                ->getTreeOrderedArray();
+
             foreach ($array as $key => $item) {
                 $maxDepth = $this->config->getConfig(self::XML_PATH_TO_BLOG_CATEGORY_DEPTH);
                 if ($maxDepth > 0 && $item->getLevel() >= $maxDepth) {
@@ -126,7 +131,11 @@ class Category extends Template
             if (!empty($this->ignoredLinks)) {
                 $array->addFieldToFilter('identifier', ['nin' => $this->config->getIgnoredLinks()]);
             }
-            $array = $array->setOrder('position')->getTreeOrderedArray();
+
+            $array = $array->addFieldToFilter('mf_exclude_html_sitemap', 0)
+                ->setOrder('position')
+                ->getTreeOrderedArray();
+
             foreach ($array as $key => $item) {
                 $maxDepth = $this->config->getConfig(self::XML_PATH_TO_BLOG_CATEGORY_DEPTH);
                 if ($maxDepth > 0 && $item->getLevel() >= $maxDepth) {

@@ -10,6 +10,7 @@ use Magento\Catalog\Model\ResourceModel\Category\Collection;
 use Magento\Framework\View\Element\Template;
 use Magefan\HtmlSitemap\Model\Config;
 use Magento\Catalog\Helper\Category as CategoryHelper;
+use Magento\Catalog\Model\ResourceModel\Category\CollectionFactory;
 
 class Category extends Template
 {
@@ -34,6 +35,16 @@ class Category extends Template
     private $ignoredLinks;
 
     /**
+     * @var CollectionFactory
+     */
+    private $collectionFactory;
+
+    /**
+     * @var array
+     */
+    private $excludedCategoriesIds = [];
+
+    /**
      * Category constructor.
      * @param Template\Context $context
      * @param CategoryHelper $categoryHelper
@@ -44,12 +55,14 @@ class Category extends Template
         Template\Context $context,
         CategoryHelper $categoryHelper,
         Config $config,
+        CollectionFactory $collectionFactory,
         array $data = []
     ) {
         parent::__construct($context, $data);
         $this->categoryHelper = $categoryHelper;
         $this->config = $config;
         $this->ignoredLinks = $config->getIgnoredLinks();
+        $this->collectionFactory = $collectionFactory;
     }
 
     /**
@@ -84,14 +97,17 @@ class Category extends Template
 
         if (!$this->hasData($k)) {
             $categories = $this->categoryHelper->getStoreCategories(false, true, false);
-            if (!empty($this->ignoredLinks)) {
-                $categories
-                    ->addAttributeToFilter('url_key', ['nin' => $this->config->getIgnoredLinks()]);
 
+            if (!empty($this->ignoredLinks)) {
+                $categories->addAttributeToFilter('url_key', ['nin' => $this->config->getIgnoredLinks()]);
             }
 
             if ($maxDepth) {
                 $categories->addAttributeToFilter('level', ['lt' => $maxDepth]);
+            }
+
+            if ($this->getExcludedCategoriesIds()) {
+                $categories->addAttributeToFilter('entity_id', ['nin' => $this->getExcludedCategoriesIds()]);
             }
 
             $categories->setPageSize($pageSize);
@@ -121,6 +137,10 @@ class Category extends Template
                 $categories->addAttributeToFilter('level', ['lt' => $maxDepth]);
             }
 
+            if ($this->getExcludedCategoriesIds()) {
+                $categories->addAttributeToFilter('entity_id', ['nin' => $this->getExcludedCategoriesIds()]);
+            }
+
             $this->setData($k, $categories);
         }
 
@@ -133,5 +153,18 @@ class Category extends Template
     public function getSortOrder()
     {
         return $this->config->getSortOrder('categorylinks');
+    }
+
+    /**
+     * @return array
+     */
+    private function getExcludedCategoriesIds()
+    {
+        if (!$this->excludedCategoriesIds) {
+            $this->excludedCategoriesIds = $this->collectionFactory->create()
+                ->addAttributeToFilter('mf_exclude_html_sitemap', 1)->getAllIds();
+        }
+
+        return $this->excludedCategoriesIds;
     }
 }

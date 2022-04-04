@@ -73,8 +73,8 @@
                 <field id="displaymore" translate="label comment" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Display "View More" Link</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment>Out of Stock products will showed by the Magento configurations</comment>
                 </field>
+                <comment>Out of Stock products will be showed according to the Magento configurations.</comment>
             </group>
             <group id="categorylinks" translate="label comment" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Category Links</label>
@@ -98,7 +98,6 @@
                     <label>Display "View More" Link</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <comment>Out of Stock products will showed by the Magento configurations</comment>
             </group>
             <group id="blogpostlinks" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Blog Post Links (Magefan Blog Required)</label>
@@ -142,7 +141,6 @@
                     <label>Display "View More" Link</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <comment>Out of Stock products will showed by the Magento configurations</comment>
             </group>
             <group id="additionallinks" translate="label" type="text" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Additional Links</label>

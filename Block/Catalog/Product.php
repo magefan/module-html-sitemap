@@ -51,6 +51,11 @@ class Product extends Template
     private $ignoredLinks;
 
     /**
+     * @var
+     */
+    private $excludedProductsIds;
+
+    /**
      * Product constructor.
      * @param Template\Context $context
      * @param CollectionFactory $productCollectionFactory
@@ -113,6 +118,11 @@ class Product extends Template
         if (!empty($this->ignoredLinks)) {
             $products->addAttributeToFilter('url_key', ['nin' => $this->config->getIgnoredLinks()]);
         }
+
+        if ($this->getExcludedProductsIds()) {
+            $products->addAttributeToFilter('entity_id', ['nin' => $this->getExcludedProductsIds()]);
+        }
+
         $products
             ->setVisibility($this->visibility->getVisibleInSiteIds())
             ->addStoreFilter($this->storeManager->getStore()->getId())
@@ -133,6 +143,11 @@ class Product extends Template
         if (!empty($this->ignoredLinks)) {
             $products->addAttributeToFilter('url_key', ['nin' => $this->config->getIgnoredLinks()]);
         }
+
+        if ($this->getExcludedProductsIds()) {
+            $products->addAttributeToFilter('entity_id', ['nin' => $this->getExcludedProductsIds()]);
+        }
+
         $products
             ->setVisibility($this->visibility->getVisibleInSiteIds())
             ->addStoreFilter($this->storeManager->getStore()->getId());
@@ -146,5 +161,18 @@ class Product extends Template
     public function getSortOrder()
     {
         return $this->config->getSortOrder('productlinks');
+    }
+
+    /**
+     * @return array
+     */
+    private function getExcludedProductsIds()
+    {
+        if (!$this->excludedProductsIds) {
+            $this->excludedProductsIds = $this->productCollectionFactory->create()
+                ->addAttributeToFilter('mf_exclude_html_sitemap', 1)->getAllIds();
+        }
+
+        return $this->excludedProductsIds;
     }
 }
