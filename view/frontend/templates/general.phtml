@@ -1,13 +1,21 @@
-
+<?php
+/**
+ * Copyright © Magefan (support@magefan.com). All rights reserved.
+ * Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+ */
+?>
 
 <div class="container">
     <input id="html-sitemap-search" placeholder="Search" style="border-radius: 15px; padding: 15px;" type="text"/>
 </div>
 
-<style>.sitemap-item-type {
+<style>
+    .sitemap-item-type {
         display: inline-block;
         width: 100%;
+        overflow-x: auto;
     }
+
     .sitemap-col {
         display: block;
         width: 25%;
@@ -19,7 +27,6 @@
         display: block;
         padding: 5px;
     }
-
 
     @media screen and (max-width: 400px) {
         .sitemap-col {
@@ -45,10 +52,7 @@
 
 
 <script>
-    require([
-        "jquery"
-    ], function($) {
-        'use strict';
+    require(['jquery'], function($) {
 
         var searchQuery = '';
 
