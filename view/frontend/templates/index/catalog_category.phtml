@@ -12,7 +12,7 @@
 $items = $block->getGroupedChildes();
 ?>
 <?php if (count($items)) { ?>
-    <div>
+    <div class="sitemap-item-type">
         <h2><?= $block->escapeHtml(__($block->getBlockTitle())) ?></h2>
         <br />
         <div class="widget block block-categories" data-bind="scope: 'categories'">
@@ -44,7 +44,7 @@ $items = $block->getGroupedChildes();
                 ?>
             </ul>
             <?php if ($block->showViewMore()): ?>
-                <a href="<?= $block->escapeUrl($block->getUrl('*/catalog_category/categories'))?>">
+                <a href="<?= $block->escapeUrl($block->getUrl('*/catalog_category/categories'))?>" style="color: red; padding: 5px;">
                     <?= $block->escapeHtml(__('View more'))?>
                 </a>
             <?php endif; ?>

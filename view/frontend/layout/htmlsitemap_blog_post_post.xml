@@ -8,6 +8,7 @@
 <page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
 	<body>
 		<referenceContainer name="content">
+            <block name="html-sitemap-general" template="Magefan_HtmlSitemap::general.phtml"/>
 			<block class="Magefan\HtmlSitemap\Block\Blog\Post" ifconfig="mfblog/general/enabled" name="blog.post" template="Magefan_HtmlSitemap::blog/post.phtml"/>
 		</referenceContainer>
 	</body>

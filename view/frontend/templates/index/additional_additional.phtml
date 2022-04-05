@@ -10,21 +10,33 @@
  */
 
 $links = $block->getLinksArray();
+$limit = 4;
+$i = 0;
+$j = 0;
 ?>
 <?php if (count($links)): ?>
-    <div>
+    <div class="sitemap-item-type">
         <h2><?= $block->escapeHtml(__($block->getBlockTitle())) ?></h2>
         <br />
         <?php foreach ($links as $link): ?>
             <?php if ($link): ?>
-                <a href="<?= $block->escapeUrl($block->getBaseUrl() . $link['url'])?>">
-                    <?= $block->escapeHtml($link['title'])?>
-                </a>
-                <br />
+                <?= ($i === 0) ? '<div class="sitemap-col">' : '' ?>
+                    <a href="<?= $block->escapeUrl($block->getBaseUrl() . $link['url'])?>">
+                        <?= $block->escapeHtml($link['title'])?>
+                    </a>
+                <?= ($i === $limit-1 || count($links)-1 == $j) ? '</div>' : '' ?>
+                <?php
+                    $i++;
+                    $j++;
+
+                    if ($i === $limit) {
+                        $i = 0;
+                    }
+                ?>
             <?php endif; ?>
         <?php endforeach; ?>
         <?php if ($block->showViewMore()): ?>
-            <a href="<?= $block->escapeUrl($block->getUrl('*/additional/links'))?>">
+            <a href="<?= $block->escapeUrl($block->getUrl('*/additional/links'))?>" style="color: red; padding: 5px;">
                 <?= $block->escapeHtml(__('View more'))?>
             </a>
         <?php endif; ?>

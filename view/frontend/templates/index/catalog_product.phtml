@@ -10,21 +10,33 @@
  */
 
 $products = $block->getProductCollection();
+$limit = 4;
+$i = 0;
+$j = 0;
 ?>
 <?php if (count($products)) { ?>
-<div>
-    <h2><?= $block->escapeHtml(__($block->getBlockTitle())) ?></h2>
-    <br />
-    <?php foreach ($products as $product): ?>
-        <a href="<?= $block->escapeUrl($product->getProductUrl()) ?>">
-            <?=$block->escapeHtml($product->getName()) ?>
-        </a>
-        <br/>
-    <?php endforeach; ?>
-    <?php if ($block->showViewMore()): ?>
-        <a href="<?= $block->escapeUrl($block->getUrl('*/catalog_product/products'))?>">
-            <?= $block->escapeHtml(__('View more'))?>
-        </a>
-    <?php endif; ?>
-</div>
+    <div class="sitemap-item-type">
+        <h2><?= $block->escapeHtml(__($block->getBlockTitle())) ?></h2>
+        <br>
+        <?php foreach ($products as $product): ?>
+            <?= ($i === 0) ? '<div class="sitemap-col">' : '' ?>
+            <a href="<?= $block->escapeUrl($product->getProductUrl()) ?>">
+                <?=$block->escapeHtml($product->getName()) ?>
+            </a>
+            <?= ($i === $limit-1 || count($products)-1 == $j) ? '</div>' : '' ?>
+            <?php
+            $i++;
+            $j++;
+
+            if ($i === $limit) {
+                $i = 0;
+            }
+            ?>
+        <?php endforeach; ?>
+        <?php if ($block->showViewMore()): ?>
+            <a href="<?= $block->escapeUrl($block->getUrl('*/catalog_product/products'))?>" style="color: red; padding: 5px;">
+                <?= $block->escapeHtml(__('View more'))?>
+            </a>
+        <?php endif; ?>
+    </div>
 <?php } ?>
