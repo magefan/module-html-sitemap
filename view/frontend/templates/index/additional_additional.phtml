@@ -15,9 +15,9 @@ $i = 0;
 $j = 0;
 ?>
 <?php if (count($links)): ?>
-    <div class="sitemap-item-type">
+    <div class="sitemap-item-type sitemap-item-section">
         <h2><?= $block->escapeHtml(__($block->getBlockTitle())) ?></h2>
-        <br />
+        <br>
         <?php foreach ($links as $link): ?>
             <?php if ($link): ?>
                 <?= ($i === 0) ? '<div class="sitemap-col">' : '' ?>

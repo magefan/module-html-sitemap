@@ -8,45 +8,55 @@
  * @var $block \Magefan\HtmlSitemap\Block\Catalog\Product
  */
 ?>
-<div class="sitemap-item-type">
+<div class="sitemap-item-type sitemap-item-section">
     <h2><?=$block->escapeHtml(__('All Products')) ?></h2>
-    <br />
-    <?php $lettersArray = range('A', 'Z');
+    <br>
+    <?php
+    $lettersArray = range('A', 'Z');
+    $lettersArray[] = '#';
     $productCollection = $block->getAllProductCollection();
-    foreach ($lettersArray as $letter):
-        $productsArray = [];?>
-        <?php foreach ($productCollection as $product):
-            if (substr($product->getName(), 0, 1) == $letter):
+
+    foreach ($lettersArray as $letter) {
+        $productsArray = [];
+         foreach ($productCollection as $product) {
+            if (mb_strtoupper(substr($product->getName(), 0, 1)) == $letter || $letter == '#') {
                 $productsArray[] = ['name' => $product->getName(), 'url' => $product->getProductUrl()];
                 $productCollection->removeItemByKey($product->getEntityId());
-            endif;
-        endforeach; ?>
-            <?php if ($productsArray): ?>
-                <p><strong><?= $block->escapeHtml($letter); ?></strong></p>
-            <?php endif; ?>
-        <?php $ulLimit = ceil(count($productsArray)/4);
-        $liCount = 0; ?>
-        <table>
-            <th>
-            <?php foreach ($productsArray as $product):
-                if ($liCount == 0): ?>
-                    <th>
-                    <ul style="list-style-type:none">
-                <?php endif; ?>
-                <li>
-                    <a href="<?= $block->escapeUrl($product['url']) ?>"><?= $block->escapeHtml($product['name']) ?></a>
-                </li>
-                <?php
-                $liCount ++;
-                if ($liCount == $ulLimit): ?>
-                    </ul>
-                    </th>
-                    <?php $liCount = 0; ?>
-                <?php endif; ?>
-            <?php endforeach; ?>
-            </ul>
-            </th>
-            </tr>
-        </table>
-    <?php endforeach; ?>
+            }
+        }
+
+        if (!$productsArray) {
+            continue;
+        }
+        ?>
+
+        <div class="sitemap-item-section">
+            <p>
+                <strong><?= $block->escapeHtml($letter); ?></strong>
+            </p>
+
+            <?php $ulLimit = ceil(count($productsArray)/4);
+            $liCount = 0; ?>
+            <table>
+                <th>
+                <?php foreach ($productsArray as $product) {
+                    if ($liCount == 0) { ?>
+                        <th>
+                            <ul style="list-style-type:none">
+                    <?php } ?>
+                                <li>
+                                    <a href="<?= $block->escapeUrl($product['url']) ?>"><?= $block->escapeHtml($product['name']) ?></a>
+                                </li>
+                    <?php
+                    $liCount ++;
+                    if ($liCount == $ulLimit) { ?>
+                            </ul>
+                        </th>
+                        <?php $liCount = 0; ?>
+                    <?php } ?>
+                <?php } ?>
+                </th>
+            </table>
+        </div>
+    <?php } ?>
 </div>

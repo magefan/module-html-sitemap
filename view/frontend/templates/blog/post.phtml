@@ -8,22 +8,33 @@
  * @var $block \Magefan\HtmlSitemap\Block\Blog\Post
  */
 ?>
-<div class="sitemap-item-type">
+<div class="sitemap-item-type sitemap-item-section">
     <h2><?= $block->escapeHtml(__('All Posts')) ?></h2>
-    <br />
-    <?php $lettersArray = range('A', 'Z');
+    <br>
+    <?php
+    $lettersArray = range('A', 'Z');
+    $lettersArray[] = '#';
     $postCollection = $block->getAllPostCollection();
+
     foreach ($lettersArray as $letter):
-        $postsArray = [];?>
-        <?php foreach ($postCollection as $post):
-            if (substr($post->getTitle(), 0, 1) == $letter):
+        $postsArray = [];
+         foreach ($postCollection as $post) {
+            if (mb_strtoupper(substr($post->getTitle(), 0, 1)) == $letter || $letter == '#') {
                 $postsArray[] = ['name' => $post->getTitle(), 'url' => $post->getPostUrl()];
-                $postCollection->removeItemByKey($post->getEntityId());
-            endif;
-        endforeach;?>
-        <?php if ($postsArray):?>
-            <p><strong><?= $block->escapeHtml($letter); ?></strong></p>
-        <?php endif;?>
+                $postCollection->removeItemByKey($post->getId());
+            }
+        }
+
+        if (!$postsArray) {
+            continue;
+        }
+        ?>
+
+    <div class="sitemap-item-section">
+        <p>
+            <strong><?= $block->escapeHtml($letter); ?></strong>
+        </p>
+
         <?php $ulLimit = ceil(count($postsArray)/4);
         $liCount = 0; ?>
         <table>
@@ -46,9 +57,8 @@
                         <?php $liCount = 0; ?>
                     <?php endif; ?>
                 <?php endforeach; ?>
-                </ul>
-                </th>
-            </tr>
+            </th>
         </table>
+    </div>
     <?php endforeach; ?>
 </div>

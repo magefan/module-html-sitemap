@@ -8,9 +8,9 @@
  * @var $block \Magefan\HtmlSitemap\Block\Blog\Category
  */
 ?>
-<div class="sitemap-item-type">
+<div class="sitemap-item-type sitemap-item-section">
     <h2><?= $block->escapeHtml(__($block->getBlockTitle())) ?></h2>
-    <br />
+    <br>
     <?php $items = $block->getAllGroupedChildes(); ?>
 
     <?php if (count($items)) { ?>
@@ -45,5 +45,12 @@
                 ?>
             </ul>
         </div>
+        <style>
+            .htmlsitemap-blog_category-categories .widget.block-categories ul li {
+                padding: 0 0 0 15px;
+            }
+        </style>
     <?php } ?>
 </div>
+
+

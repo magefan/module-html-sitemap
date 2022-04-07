@@ -47,6 +47,9 @@
     .highlight-result {
         color: red;
     }
+    .htmlsitemap-index-index .widget.block-categories ul li {
+        padding: 0 0 0 15px;
+    }
 
 </style>
 
@@ -67,7 +70,7 @@
                 }
             });
 
-            $('.sitemap-item-type a').each(function (key, el) {
+            $('.sitemap-item-section a').each(function (key, el) {
                 el.originalTextContent = el.innerText ? el.innerHTML : el.textContent;
             });
         }
@@ -75,17 +78,29 @@
         function findItems(query) {
             searchQuery = query.replace(/^\s+/, '').replace(/\s+$/, '').toLowerCase();
 
-            $('.sitemap-item-type a').each(function(key, el) {
-                el.textContent = el.originalTextContent.replace(/&amp;/g, '&');
-                if (searchQuery.replace(/\s+/, '') != '') {
-                    if (el.originalTextContent.toLowerCase().indexOf(searchQuery) == -1) {
-                        $(el).hide();
+            $('.sitemap-item-section').each(function(key, el) {
+                var noResults = true;
+
+                $(this).find('a').each(function(key, el) {
+                    el.textContent = el.originalTextContent.replace(/&amp;/g, '&');
+                    if (searchQuery.replace(/\s+/, '') != '') {
+                        if (el.originalTextContent.toLowerCase().indexOf(searchQuery) == -1) {
+                            $(el).hide();
+                        } else {
+                            $(el).show();
+                            noResults = false;
+                            highlightResult($(el).get(0), searchQuery, "highlight-result");
+                        }
                     } else {
                         $(el).show();
-                        highlightResult($(el).get(0), searchQuery, "highlight-result");
+                        noResults = false;
                     }
-                } else {
-                    $(el).show();
+                });
+
+                if (noResults) {
+                    $(this).hide();
+                } else  {
+                    $(this).show();
                 }
             });
         }

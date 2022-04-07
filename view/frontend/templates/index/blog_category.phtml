@@ -12,7 +12,7 @@
 $items = $block->getGroupedChildes();
 ?>
 <?php if (count($items)) { ?>
-    <div class="sitemap-item-type">
+    <div class="sitemap-item-type sitemap-item-section">
         <h2><?= $block->escapeHtml(__($block->getBlockTitle())) ?></h2>
         <br />
         <div class="widget block block-categories" data-bind="scope: 'categories'">
