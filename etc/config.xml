@@ -12,11 +12,11 @@
                 <enabled>1</enabled>
                 <mfmodule>HtmlSitemap</mfmodule>
                 <mftype>1</mftype>
-                <displayin>1,2</displayin>
+                <displayin>2</displayin>
                 <openlinks>1</openlinks>
             </general>
             <index_page>
-                <title>HTML Sitemap</title>
+                <title>Sitemap</title>
             </index_page>
             <cmspagelinks>
                 <displaycmspagelinks>1</displaycmspagelinks>

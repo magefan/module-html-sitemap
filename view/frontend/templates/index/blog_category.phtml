@@ -16,9 +16,9 @@ $items = $block->getGroupedChildes();
         <h2><?= $block->escapeHtml(__($block->getBlockTitle())) ?></h2>
         <br />
         <div class="widget block block-categories" data-bind="scope: 'categories'">
-            <ul class="accordion"  id="accordion-2">
+            <div class="accordion"  id="accordion-2">
                 <?php
-                $level = 0;
+                $level = -1;
                 $first = true;
                 foreach ($items as $item) {
                     $newLevel = $item->getLevel();
@@ -40,8 +40,13 @@ $items = $block->getGroupedChildes();
                     <?php
                     $level = $newLevel;
                     $first = false;
-                } ?>
-            </ul>
+                }
+
+                $closedTags = ($level > 0) ? $level - 1 : 1;
+                echo str_repeat('</li></ul>', $closedTags);
+
+                ?>
+            </div>
             <?php if ($block->showViewMore()): ?>
                 <a href="<?= $block->escapeUrl($block->getUrl('*/blog_category/categories'))?>" style="color: red; padding: 5px;">
                     <?= $block->escapeHtml(__('View more'))?>

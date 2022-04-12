@@ -35,29 +35,33 @@
             <strong><?= $block->escapeHtml($letter); ?></strong>
         </p>
 
-        <?php $ulLimit = ceil(count($postsArray)/4);
-        $liCount = 0; ?>
+        <?php
+            $ulLimit = ceil(count($postsArray)/4);
+            $liCount = 0;
+            $i = 0;
+        ?>
         <table>
-            <th>
-                <?php foreach ($postsArray as $post):
-                    if ($liCount == 0): ?>
+            <tr>
+                <?php foreach ($postsArray as $post) {
+                    if ($liCount == 0) { ?>
                         <th>
                         <ul style="list-style-type:none">
-                    <?php endif; ?>
+                    <?php } ?>
                         <li>
                             <a href="<?= $block->escapeUrl($post['url']) ?>">
                                 <?= $block->escapeHtml($post['name']) ?>
                             </a>
                         </li>
                     <?php
-                    $liCount ++;
-                    if ($liCount == $ulLimit): ?>
+                    $liCount++;
+                    $i++;
+                    if ($liCount == $ulLimit || $i == count($postsArray)) { ?>
                         </ul>
                         </th>
                         <?php $liCount = 0; ?>
-                    <?php endif; ?>
-                <?php endforeach; ?>
-            </th>
+                    <?php } ?>
+                <?php } ?>
+            </tr>
         </table>
     </div>
     <?php endforeach; ?>
