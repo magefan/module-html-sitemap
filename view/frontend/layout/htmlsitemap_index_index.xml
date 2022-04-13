@@ -10,12 +10,12 @@
 		<referenceContainer name="content">
             <block name="html-sitemap-general" template="Magefan_HtmlSitemap::general.phtml"/>
             <block class="Magefan\HtmlSitemap\Block\Sitemap" name="blog.sitemap">
-                <block class="Magefan\HtmlSitemap\Block\Cms\Page" name="index.cms.pages" template="Magefan_HtmlSitemap::index/cms_pages.phtml" ifconfig="mfhs/cmspagelinks/displaycmspagelinks"/>
                 <block class="Magefan\HtmlSitemap\Block\Catalog\Category" name="index.catalog.category" template="Magefan_HtmlSitemap::index/catalog_category.phtml" ifconfig="mfhs/categorylinks/displaycategorylinks"/>
                 <block class="Magefan\HtmlSitemap\Block\Catalog\Product" name="index.catalog.product" template="Magefan_HtmlSitemap::index/catalog_product.phtml" ifconfig="mfhs/productlinks/displayproductlinks"/>
                 <block class="Magefan\HtmlSitemap\Block\Blog\Post" name="blog.post" template="Magefan_HtmlSitemap::index/blog_post.phtml" ifconfig="mfhs/blogpostlinks/displaypostlinks"/>
                 <block class="Magefan\HtmlSitemap\Block\Blog\Category" name="blog.category" template="Magefan_HtmlSitemap::index/blog_category.phtml" ifconfig="mfhs/blogcategorylinks/displayblogcategorylinks"/>
                 <block class="Magefan\HtmlSitemap\Block\Additional\Additional" name="index.additional.additional" template="Magefan_HtmlSitemap::index/additional_additional.phtml" ifconfig="mfhs/additionallinks/displaylinks"/>
+                <block class="Magefan\HtmlSitemap\Block\Cms\Page" name="index.cms.pages" template="Magefan_HtmlSitemap::index/cms_pages.phtml" ifconfig="mfhs/cmspagelinks/displaycmspagelinks"/>
             </block>
         </referenceContainer>
 	</body>

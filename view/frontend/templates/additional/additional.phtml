@@ -13,7 +13,6 @@ $links = $block->getAllLinksArray();
 ?>
 <div class="sitemap-item-type sitemap-item-section">
     <?php if (count($links)): ?>
-        <h2><?= $block->escapeHtml(__($block->getBlockTitle())) ?></h2>
         <br>
         <?php foreach ($links as $link): ?>
             <?php if ($link): ?>

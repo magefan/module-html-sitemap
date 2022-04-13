@@ -132,4 +132,20 @@ class Additional extends Template
     {
         return $this->config->getSortOrder('additionallinks');
     }
+
+    /**
+     * @return $this|Additional
+     */
+    protected function _prepareLayout()
+    {
+        parent::_prepareLayout();
+
+        $title = $this->getBlockTitle();
+
+        if ($title) {
+            $this->pageConfig->getTitle()->set( __('Sitemap') . ' - ' .  $this->getBlockTitle());
+        }
+
+        return $this;
+    }
 }

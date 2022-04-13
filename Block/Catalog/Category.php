@@ -167,4 +167,20 @@ class Category extends Template
 
         return $this->excludedCategoriesIds;
     }
+
+    /**
+     * @return $this|Category
+     */
+    protected function _prepareLayout()
+    {
+        parent::_prepareLayout();
+
+        $title = $this->getBlockTitle();
+
+        if ($title) {
+            $this->pageConfig->getTitle()->set( __('Sitemap') . ' - ' .  $this->getBlockTitle());
+        }
+
+        return $this;
+    }
 }

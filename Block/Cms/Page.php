@@ -132,6 +132,15 @@ class Page extends Template
     {
         parent::_prepareLayout();
 
+        if ($this->getNameInLayout() == 'cms.page') {
+            $title = $this->getBlockTitle();
+
+            if ($title) {
+                $this->pageConfig->getTitle()->set( __('Sitemap') . ' - ' .  $this->getBlockTitle());
+            }
+            return $this;
+        }
+
         $metaTitle = $this->config->getConfig(self::XML_PATH_TO_PAGE_META_TITLE);
         $title = $this->config->getConfig(self::XML_PATH_TO_PAGE_TITLE);
         $metaDescription = $this->config->getConfig(self::XML_PATH_TO_PAGE_META_DESCRIPTION);

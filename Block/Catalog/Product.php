@@ -175,4 +175,21 @@ class Product extends Template
 
         return $this->excludedProductsIds;
     }
+
+
+    /**
+     * @return $this|Product
+     */
+    protected function _prepareLayout()
+    {
+        parent::_prepareLayout();
+
+        $title = $this->getBlockTitle();
+
+        if ($title) {
+            $this->pageConfig->getTitle()->set( __('Sitemap') . ' - ' .  $this->getBlockTitle());
+        }
+
+        return $this;
+    }
 }
