@@ -8,14 +8,12 @@
  * @var \Magefan\HtmlSitemap\Block\Cms\Page $block
  */
 ?>
-<div>
-    <h2><?= $block->escapeHtml(__($block->getBlockTitle())) ?></h2>
-    <br />
+<div class="sitemap-item-type sitemap-item-section">
+    <br>
     <?php foreach ($block->getCmsPagesList() as $page): ?>
         <a href="<?= $block->escapeUrl($block->getBaseUrl() . $page->getIdentifier()) ?>">
             <?= $block->escapeHtml($page['title']) ?>
         </a>
-        <br/>
     <?php endforeach; ?>
     <?php if ($pages = $block->getPagerHtml()): ?>
         <div class="order-products-toolbar toolbar bottom"><?= $pages ?></div>

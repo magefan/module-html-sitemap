@@ -81,7 +81,7 @@ class Additional extends Template
                 if ($i >= $pageSize) {
                     break;
                 }
-                if ($link !='') {
+                if (trim($link) !='') {
                     $linkElements = explode('|', $link);
 
                     if ($linkElements[0] == '/') {
@@ -109,7 +109,7 @@ class Additional extends Template
 
         if (!empty($links)) {
             foreach ($links as $link) {
-                if ($link !='') {
+                if (trim($link) !='') {
                     $linkElements = explode('|', $link);
 
                     if ($linkElements[0] == '/') {
@@ -131,5 +131,21 @@ class Additional extends Template
     public function getSortOrder()
     {
         return $this->config->getSortOrder('additionallinks');
+    }
+
+    /**
+     * @return $this|Additional
+     */
+    protected function _prepareLayout()
+    {
+        parent::_prepareLayout();
+
+        $title = $this->getBlockTitle();
+
+        if ($title) {
+            $this->pageConfig->getTitle()->set( __('Sitemap') . ' - ' .  $this->getBlockTitle());
+        }
+
+        return $this;
     }
 }

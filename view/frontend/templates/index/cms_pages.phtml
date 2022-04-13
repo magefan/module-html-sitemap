@@ -4,27 +4,43 @@
  * Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
  */
 ?>
+
 <?php
 /**
  * @var \Magefan\HtmlSitemap\Block\Cms\Page $block
  */
 
 $pages = $block->getCmsPages();
+$limit = 4;
+$i = 0;
+$j = 0;
 ?>
 <?php if (count($pages)) { ?>
-    <div>
+    <div class="sitemap-item-type sitemap-item-section">
         <h2><?= $block->escapeHtml(__($block->getBlockTitle())) ?></h2>
-        <br />
+        <br>
         <?php foreach ($pages as $page): ?>
-            <a href="<?= $block->escapeUrl($block->getBaseUrl() . $page->getIdentifier()) ?>">
-                <?= $block->escapeHtml($page['title']) ?>
-            </a>
-            <br/>
+            <?= ($i === 0) ? '<div class="sitemap-col">' : '' ?>
+                <a href="<?= $block->escapeUrl($block->getBaseUrl() . $page->getIdentifier()) ?>">
+                    <?= $block->escapeHtml($page['title']) ?>
+                </a>
+            <?= ($i === $limit-1 || count($pages)-1 == $j) ? '</div>' : '' ?>
+            <?php
+                $i++;
+                $j++;
+
+                if ($i === $limit) {
+                    $i = 0;
+                }
+            ?>
         <?php endforeach; ?>
         <?php if ($block->showViewMore()): ?>
-            <a href="<?= $block->escapeUrl($block->getUrl('*/cms_page/page'))?>">
+            <a href="<?= $block->escapeUrl($block->getUrl('*/cms_page/page'))?>" style="color: red; padding: 5px;">
                 <?= $block->escapeHtml(__('View more'))?>
             </a>
         <?php endif; ?>
     </div>
 <?php } ?>
+
+
+

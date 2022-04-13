@@ -1,0 +1,134 @@
+<?php
+/**
+ * Copyright © Magefan (support@magefan.com). All rights reserved.
+ * Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+ */
+?>
+
+<div class="container">
+    <input id="html-sitemap-search" placeholder="Search" style="border-radius: 15px; padding: 15px;" type="text"/>
+</div>
+
+<style>
+    .sitemap-item-type {
+        display: inline-block;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    .sitemap-col {
+        display: block;
+        width: 25%;
+        float: left;
+        padding-bottom: 20px;
+    }
+
+    .sitemap-item-type a {
+        display: block;
+        padding: 5px;
+    }
+
+    @media screen and (max-width: 400px) {
+        .sitemap-col {
+            width: 100%;
+        }
+
+        .sitemap-col {
+            padding-bottom: 0;
+        }
+    }
+
+    @media screen and (min-width: 401px) and (max-width: 768px) {
+        .sitemap-col {
+            width: 50%;
+        }
+    }
+
+    .highlight-result {
+        color: red;
+    }
+    .htmlsitemap-index-index .widget.block-categories ul li {
+        padding: 0 0 0 15px;
+    }
+
+</style>
+
+
+<script>
+    require(['jquery'], function($) {
+
+        var searchQuery = '';
+
+        initSearch();
+
+        function initSearch() {
+            $('#html-sitemap-search').keyup(function(el) {
+                var val = el.target.value;
+
+                if (searchQuery != val.toLocaleLowerCase()) {
+                    findItems(val);
+                }
+            });
+
+            $('.sitemap-item-section a').each(function (key, el) {
+                el.originalTextContent = el.innerText ? el.innerHTML : el.textContent;
+            });
+        }
+
+        function findItems(query) {
+            searchQuery = query.replace(/^\s+/, '').replace(/\s+$/, '').toLowerCase();
+
+            $('.sitemap-item-section').each(function(key, el) {
+                var noResults = true;
+
+                $(this).find('a').each(function(key, el) {
+                    el.textContent = el.originalTextContent.replace(/&amp;/g, '&');
+                    if (searchQuery.replace(/\s+/, '') != '') {
+                        if (el.originalTextContent.toLowerCase().indexOf(searchQuery) == -1) {
+                            $(el).hide();
+                        } else {
+                            $(el).show();
+                            noResults = false;
+                            highlightResult($(el).get(0), searchQuery, "highlight-result");
+                        }
+                    } else {
+                        $(el).show();
+                        noResults = false;
+                    }
+                });
+
+                if (noResults) {
+                    $(this).hide();
+                } else  {
+                    $(this).show();
+                }
+            });
+        }
+
+        function highlightResult(element, term, className) {
+            className = className || 'highlight';
+            term = (term || '').toUpperCase();
+            if (term.replace(/\s+/, '') == '') {
+                return false
+            }
+
+            if (element.nodeType == Node.TEXT_NODE) {
+                var pos = element.data.toUpperCase().indexOf(term);
+                if (pos >= 0) {
+                    var searchResult = element.splitText(pos),
+                        spanWrapper = document.createElement('span');
+
+                    searchResult.splitText(term.length);
+                    spanWrapper.className = className;
+                    spanWrapper.appendChild(searchResult.cloneNode(true));
+                    searchResult.parentNode.replaceChild(spanWrapper, searchResult);
+
+                }
+            } else if (element.nodeType == Node.ELEMENT_NODE && element.childNodes && !/(script|style)/i.test(element.tagName)) {
+                for (var i = 0; i < element.childNodes.length; ++i) {
+                    i += highlightResult(element.childNodes[i], term, className);
+                }
+            }
+        };
+    });
+</script>
