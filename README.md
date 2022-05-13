@@ -3,6 +3,8 @@
 [![Total Downloads](https://poser.pugx.org/magefan/module-html-sitemap/downloads)](https://packagist.org/packages/magefan/module-html-sitemap)
 [![Latest Stable Version](https://poser.pugx.org/magefan/module-html-sitemap/v/stable)](https://packagist.org/packages/magefan/module-html-sitemap)
 
+<a href="https://www.comebackalive.in.ua/donate"><img width="830" height="208" src="https://cm.magefan.com/blog/support-ukraine.png"></a>
+
 <img width="150" height="100" src="https://magefan.com/media/wysiwyg/made_in_ukraine.jpg">
 
 <img align="right" width="120" height="120" src="https://cm.magefan.com/mf_webp/jpg/media/catalog/product/cache/103e1b2520de2a36a364b0391bff6bdc/i/c/icon-sitemap.webp">
