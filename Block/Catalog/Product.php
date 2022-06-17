@@ -113,7 +113,7 @@ class Product extends Template
     {
         $pageSize = $this->config->getConfig(self::XML_PATH_TO_CATALOG_PRODUCTS_LIMIT);
         $products = $this->productCollectionFactory->create()
-            ->addAttributeToSelect('*')
+            ->addAttributeToSelect('name')
             ->addAttributeToFilter('status', ['in' => $this->status->getVisibleStatusIds()]);
         if (!empty($this->ignoredLinks)) {
             $products->addAttributeToFilter('url_key', ['nin' => $this->config->getIgnoredLinks()]);
@@ -138,7 +138,7 @@ class Product extends Template
     public function getAllProductCollection()
     {
         $products = $this->productCollectionFactory->create()
-            ->addAttributeToSelect('*')
+            ->addAttributeToSelect('name')
             ->addAttributeToFilter('status', ['in' => $this->status->getVisibleStatusIds()]);
         if (!empty($this->ignoredLinks)) {
             $products->addAttributeToFilter('url_key', ['nin' => $this->config->getIgnoredLinks()]);
