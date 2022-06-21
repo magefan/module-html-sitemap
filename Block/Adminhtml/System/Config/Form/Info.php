@@ -22,6 +22,6 @@ class Info extends \Magefan\Community\Block\Adminhtml\System\Config\Form\Info
      */
     protected function getModuleTitle()
     {
-        return 'Magefan HtmlSitemap Extension';
+        return 'HTML Sitemap Extension';
     }
 }
