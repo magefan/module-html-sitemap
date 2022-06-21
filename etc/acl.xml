@@ -12,7 +12,7 @@
                 <resource id="Magento_Backend::stores">
                     <resource id="Magento_Backend::stores_settings">
                         <resource id="Magento_Config::config">
-                            <resource id="Magefan_HtmlSitemap::config" title="Magefan HtmlSitemap" />
+                            <resource id="Magefan_HtmlSitemap::config" title="HTML Sitemap Section" />
                         </resource>
                     </resource>
                 </resource>
