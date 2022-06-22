@@ -11,7 +11,7 @@
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="dataType" xsi:type="string">boolean</item>
-                    <item name="label" xsi:type="string" translate="true">Exclude HTML Sitemap</item>
+                    <item name="label" xsi:type="string" translate="true">Exclude From HTML Sitemap</item>
                     <item name="formElement" xsi:type="string">checkbox</item>
                     <item name="prefer" xsi:type="string">toggle</item>
                     <item name="source" xsi:type="string">post</item>

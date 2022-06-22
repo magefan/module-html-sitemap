@@ -19,7 +19,7 @@
                     <rule name="required-entry" xsi:type="boolean">false</rule>
                 </validation>
                 <dataType>boolean</dataType>
-                <label translate="true">Exclude HTML Sitemap</label>
+                <label translate="true">Exclude From HTML Sitemap</label>
             </settings>
             <formElements>
                 <checkbox>

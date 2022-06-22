@@ -16,7 +16,7 @@
             </argument>
             <settings>
                 <dataType>boolean</dataType>
-                <label translate="true">Exclude HTML Sitemap</label>
+                <label translate="true">Exclude From HTML Sitemap</label>
                 <dataScope>mf_exclude_html_sitemap</dataScope>
             </settings>
             <formElements>
