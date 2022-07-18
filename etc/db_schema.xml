@@ -9,6 +9,6 @@
         xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
     <table name="cms_page">
         <column xsi:type="smallint" name="mf_exclude_html_sitemap" unsigned="false" nullable="false" identity="false"
-                default="0" comment="Exclude FromHTML Sitemap"/>
+                default="0" comment="Exclude From HTML Sitemap"/>
     </table>
 </schema>
