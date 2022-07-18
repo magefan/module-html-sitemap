@@ -30,7 +30,7 @@ class Recurring implements InstallSchemaInterface
                     'mf_exclude_html_sitemap' => [
                         'type' => \Magento\Framework\DB\Ddl\Table::TYPE_SMALLINT,
                         'nullable' => false,
-                        'comment' => 'Exclude HTML Sitemap',
+                        'comment' => 'Exclude From HTML Sitemap',
                         'default' => '0'
                     ],
                 ];

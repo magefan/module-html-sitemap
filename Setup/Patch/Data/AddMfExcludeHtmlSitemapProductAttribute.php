@@ -56,7 +56,7 @@ class AddMfExcludeHtmlSitemapProductAttribute implements DataPatchInterface, Pat
                 'type'                    => 'int',
                 'backend'                 => '',
                 'frontend'                => '',
-                'label'                   => 'Exclude HTML Sitemap',
+                'label'                   => 'Exclude From HTML Sitemap',
                 'input'                   => 'boolean',
                 'class'                   => '',
                 'source'                  => Boolean::class,

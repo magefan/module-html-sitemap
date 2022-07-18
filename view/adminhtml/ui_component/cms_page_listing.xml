@@ -15,7 +15,7 @@
                     <editorType>select</editorType>
                 </editor>
                 <dataType>select</dataType>
-                <label translate="true">Exclude HTML Sitemap</label>
+                <label translate="true">Exclude From HTML Sitemap</label>
             </settings>
         </column>
     </columns>
