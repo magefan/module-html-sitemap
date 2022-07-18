@@ -25,6 +25,16 @@ class Category extends Template
     private $categoryHelper;
 
     /**
+     * @var array
+     */
+    private $arrayGetCatById = [];
+
+    /**
+     * @var array
+     */
+    private $htmlCatTree = [];
+
+    /**
      * @var Config
      */
     private $config;
@@ -112,7 +122,7 @@ class Category extends Template
 
             $categories->setPageSize($pageSize);
 
-            $this->setData($k, $categories);
+            $this->setData($k, $this->getCategoryTree($categories));
         }
 
         return $this->getData($k);
@@ -141,10 +151,51 @@ class Category extends Template
                 $categories->addAttributeToFilter('entity_id', ['nin' => $this->getExcludedCategoriesIds()]);
             }
 
-            $this->setData($k, $categories);
+            $this->setData($k, $this->getCategoryTree($categories));
         }
 
         return $this->getData($k);
+    }
+
+    /**
+     * Return sorted array - in possition that required to build category tree
+     * @param $categories
+     * @return array
+     */
+    private function getCategoryTree($categories)
+    {
+        if (!count($categories)) {
+            return $categories;
+        }
+
+        $categories->setOrder('level','ASC');
+
+        foreach ($categories as $category) {
+            $this->arrayCatByLevels[$category->getLevel()][$category->getParentId()][$category->getId()] = $category->getId();
+            $this->arrayGetCatById[$category->getId()] = $category;
+        }
+
+        $level = key(reset($this->arrayCatByLevels));
+
+        $baseCategories = reset($this->arrayCatByLevels);
+        $baseCategories = reset($baseCategories);
+
+        foreach ($baseCategories as $baseCategoryId) {
+            $findChild = function($lev, $id ) use ( &$findChild ) {
+                if (isset($this->arrayCatByLevels[$lev][$id])) {
+                    $this->htmlCatTree[] = $this->arrayGetCatById[$id];
+                    foreach ($this->arrayCatByLevels[$lev][$id] as $chiedlId) {
+                        $findChild($lev+1, $chiedlId);
+                    }
+                } else {
+                    $this->htmlCatTree[] = $this->arrayGetCatById[$id];
+                }
+            };
+
+            $findChild($level + 1, $baseCategoryId);
+        }
+
+        return $this->htmlCatTree;
     }
 
     /**
