@@ -34,7 +34,7 @@
                     }
                     ?>
                     <li>
-                    <a href="<?= $block->escapeUrl($item->getCategoryUrl()) ?>">
+                    <a href="<?= $block->escapeUrl($item->getCategoryUrl()) ?>" title="<?= $block->escapeHtml($item->getTitle()) ?>">
                         <?= $block->escapeHtml($item->getTitle()) ?>
                     </a>
                     <?php

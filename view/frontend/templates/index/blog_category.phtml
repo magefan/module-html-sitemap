@@ -34,7 +34,7 @@ $items = $block->getGroupedChildes();
                         }
                     } ?>
                     <li>
-                    <a href="<?= $block->escapeUrl($item->getUrl()) ?>">
+                    <a href="<?= $block->escapeUrl($item->getUrl()) ?>" title="<?= $block->escapeHtml($block->escapeHtml($item->getTitle())) ?>">
                         <?= $block->escapeHtml($block->escapeHtml($item->getTitle())) ?>
                     </a>
                     <?php

@@ -21,7 +21,7 @@ $j = 0;
         <?php foreach ($links as $link): ?>
             <?php if ($link): ?>
                 <?= ($i === 0) ? '<div class="sitemap-col">' : '' ?>
-                    <a href="<?= $block->escapeUrl($block->getBaseUrl() . $link['url'])?>">
+                    <a href="<?= $block->escapeUrl($block->getBaseUrl() . $link['url'])?>" title="<?= $block->escapeHtml($link['title'])?>">
                         <?= $block->escapeHtml($link['title'])?>
                     </a>
                 <?= ($i === $limit-1 || count($links)-1 == $j) ? '</div>' : '' ?>

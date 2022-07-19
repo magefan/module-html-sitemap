@@ -16,7 +16,7 @@ $links = $block->getAllLinksArray();
         <br>
         <?php foreach ($links as $link): ?>
             <?php if ($link): ?>
-                <a href="<?= $block->escapeUrl($block->getBaseUrl() . $link['url'])?>">
+                <a href="<?= $block->escapeUrl($block->getBaseUrl() . $link['url']) ?>" title="<?= $block->escapeHtml($link['title']) ?>">
                     <?= $block->escapeHtml($link['title'])?>
                 </a>
             <?php endif; ?>

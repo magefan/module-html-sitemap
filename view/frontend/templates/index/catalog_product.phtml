@@ -20,7 +20,7 @@ $j = 0;
         <br>
         <?php foreach ($products as $product): ?>
             <?= ($i === 0) ? '<div class="sitemap-col">' : '' ?>
-            <a href="<?= $block->escapeUrl($product->getProductUrl()) ?>">
+            <a href="<?= $block->escapeUrl($product->getProductUrl()) ?>" title="<?=$block->escapeHtml($product->getName()) ?>">
                 <?=$block->escapeHtml($product->getName()) ?>
             </a>
             <?= ($i === $limit-1 || count($products)-1 == $j) ? '</div>' : '' ?>

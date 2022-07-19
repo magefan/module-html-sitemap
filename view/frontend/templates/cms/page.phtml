@@ -11,7 +11,7 @@
 <div class="sitemap-item-type sitemap-item-section">
     <br>
     <?php foreach ($block->getCmsPagesList() as $page): ?>
-        <a href="<?= $block->escapeUrl($block->getBaseUrl() . $page->getIdentifier()) ?>">
+        <a href="<?= $block->escapeUrl($block->getBaseUrl() . $page->getIdentifier()) ?>" title="<?= $block->escapeHtml($page['title']) ?>">
             <?= $block->escapeHtml($page['title']) ?>
         </a>
     <?php endforeach; ?>

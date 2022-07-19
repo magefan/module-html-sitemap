@@ -47,7 +47,7 @@
                         <ul style="list-style-type:none">
                     <?php } ?>
                         <li>
-                            <a href="<?= $block->escapeUrl($post['url']) ?>">
+                            <a href="<?= $block->escapeUrl($post['url']) ?>" title="<?= $block->escapeHtml($post['name']) ?>">
                                 <?= $block->escapeHtml($post['name']) ?>
                             </a>
                         </li>

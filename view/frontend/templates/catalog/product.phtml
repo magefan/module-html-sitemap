@@ -47,7 +47,7 @@
                             <ul style="list-style-type:none">
                     <?php } ?>
                                 <li>
-                                    <a href="<?= $block->escapeUrl($product['url']) ?>"><?= $block->escapeHtml($product['name']) ?></a>
+                                    <a href="<?= $block->escapeUrl($product['url']) ?>" title="<?= $block->escapeHtml($product['name']) ?>"><?= $block->escapeHtml($product['name']) ?></a>
                                 </li>
                     <?php
                     $liCount++;

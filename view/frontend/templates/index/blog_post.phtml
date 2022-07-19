@@ -20,7 +20,7 @@ $j = 0;
     <br>
     <?php foreach ($posts as $post): ?>
         <?= ($i === 0) ? '<div class="sitemap-col">' : '' ?>
-            <a href="<?= $block->escapeUrl($post->getPostUrl()) ?>">
+            <a href="<?= $block->escapeUrl($post->getPostUrl()) ?>" title="<?= $block->escapeHtml($post->getTitle()) ?>">
                 <?= $block->escapeHtml($post->getTitle()) ?>
             </a>
 
