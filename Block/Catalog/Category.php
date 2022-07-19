@@ -89,7 +89,7 @@ class Category extends Template
     public function showViewMore()
     {
         if ($this->config->getConfig(self::XML_PATH_TO_CATALOG_CATEGORY_VIEW_MORE)
-            && count($this->getAllGroupedChildes(true)) > $this->config->getConfig(self::XML_PATH_TO_CATALOG_CATEGORY_LIMIT)
+            && count($this->getAllGroupedChildes()) > $this->config->getConfig(self::XML_PATH_TO_CATALOG_CATEGORY_LIMIT)
         ) {
             return true;
         }
@@ -101,50 +101,34 @@ class Category extends Template
      */
     public function getGroupedChildes()
     {
-        $pageSize = $this->config->getConfig(self::XML_PATH_TO_CATALOG_CATEGORY_LIMIT);
-        $maxDepth = $this->config->getConfig(self::XML_PATH_TO_CATALOG_CATEGORY_DEPTH);
         $k = 'grouped_childes';
-
         if (!$this->hasData($k)) {
-            $categories = $this->categoryHelper->getStoreCategories(false, true, false);
-
-            if (!empty($this->ignoredLinks)) {
-                $categories->addAttributeToFilter('url_key', ['nin' => $this->config->getIgnoredLinks()]);
-            }
-
-            if ($maxDepth) {
-                $categories->addAttributeToFilter('level', ['lt' => $maxDepth]);
-            }
-
-            if ($this->getExcludedCategoriesIds()) {
-                $categories->addAttributeToFilter('entity_id', ['nin' => $this->getExcludedCategoriesIds()]);
-            }
-
-            $categories->setPageSize($pageSize);
-
-            $this->setData($k, $this->getCategoryTree($categories));
+             $allGroupedChildes = $this->getAllGroupedChildes();
+            $limit = $this->config->getConfig(self::XML_PATH_TO_CATALOG_CATEGORY_LIMIT);
+            $groupedChildes = array_slice($allGroupedChildes, 0, $limit);
+            $this->setData($k, $groupedChildes);
         }
-
         return $this->getData($k);
     }
+
 
     /**
      * @param bool $toLoad
      * @return Collection
      */
-    public function getAllGroupedChildes($toLoad = false)
+    public function getAllGroupedChildes()
     {
-        $maxDepth = $this->config->getConfig(self::XML_PATH_TO_CATALOG_CATEGORY_DEPTH);
         $k = 'all_grouped_childes';
-
         if (!$this->hasData($k)) {
-            $categories = $this->categoryHelper->getStoreCategories(false, true, $toLoad);
+            $categories = $this->categoryHelper->getStoreCategories(false, true, false)
+                ->setOrder('position', 'ASC');
             if (!empty($this->ignoredLinks)) {
                 $categories->addAttributeToFilter('url_key', ['nin' => $this->config->getIgnoredLinks()]);
             }
 
+            $maxDepth = $this->config->getConfig(self::XML_PATH_TO_CATALOG_CATEGORY_DEPTH) + 1;
             if ($maxDepth) {
-                $categories->addAttributeToFilter('level', ['lt' => $maxDepth]);
+                $categories->addAttributeToFilter('level', ['lteq' => $maxDepth]);
             }
 
             if ($this->getExcludedCategoriesIds()) {
@@ -158,44 +142,48 @@ class Category extends Template
     }
 
     /**
-     * Return sorted array - in possition that required to build category tree
-     * @param $categories
+     * Retrieve tree ordered categories
      * @return array
      */
-    private function getCategoryTree($categories)
+    public function getCategoryTree($categories)
     {
-        if (!count($categories)) {
-            return $categories;
+        $tree = [];
+        if ($childs = $this->getGroupedChilds($categories)) {
+            $this->_toTree($categories, 0, $childs, $tree);
+        }
+        return $tree;
+    }
+
+    /**
+     * Retrieve gruped category childs
+     * @return array
+     */
+    public function getGroupedChilds($categories)
+    {
+        $childs = [];
+        if (count($categories)) {
+            foreach ($categories as $item) {
+                $childs[$item->getLevel() > 2  ? $item->getParentId() : 0][] = $item;
+            }
+        }
+        return $childs;
+    }
+
+    /**
+     * Auxiliary function to build tree ordered array
+     * @return array
+     */
+    protected function _toTree($categories, $itemId, $childs, &$tree)
+    {
+        if ($itemId) {
+            $tree[] = $categories->getItemById($itemId);
         }
 
-        $categories->setOrder('level','ASC');
-
-        foreach ($categories as $category) {
-            $this->arrayCatByLevels[$category->getLevel()][$category->getParentId()][$category->getId()] = $category->getId();
-            $this->arrayGetCatById[$category->getId()] = $category;
+        if (isset($childs[$itemId])) {
+            foreach ($childs[$itemId] as $i) {
+                $this->_toTree($categories, $i->getId(), $childs, $tree);
+            }
         }
-
-        $level = key(reset($this->arrayCatByLevels));
-
-        $baseCategories = reset($this->arrayCatByLevels);
-        $baseCategories = reset($baseCategories);
-
-        foreach ($baseCategories as $baseCategoryId) {
-            $findChild = function($lev, $id ) use ( &$findChild ) {
-                if (isset($this->arrayCatByLevels[$lev][$id])) {
-                    $this->htmlCatTree[] = $this->arrayGetCatById[$id];
-                    foreach ($this->arrayCatByLevels[$lev][$id] as $chiedlId) {
-                        $findChild($lev+1, $chiedlId);
-                    }
-                } else {
-                    $this->htmlCatTree[] = $this->arrayGetCatById[$id];
-                }
-            };
-
-            $findChild($level + 1, $baseCategoryId);
-        }
-
-        return $this->htmlCatTree;
     }
 
     /**
