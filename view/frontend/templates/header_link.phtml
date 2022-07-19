@@ -18,7 +18,7 @@ $openLinks = ($block->getOpenLinks() == 1) ? '' : 'target="_blank"';
 <?php if ($config->isEnabled()): ?>
     <?php if (in_array('1', $displayInArray)): ?>
     <li>
-        <a href="<?= $block->escapeUrl($block->getHref()) ?>" name="header_htmlsitemap_link"<?= $openLinks ?>>
+        <a href="<?= $block->escapeUrl($block->getHref()) ?>" name="header_htmlsitemap_link" <?= $openLinks ?>>
             <?= $block->escapeHtml($block->getLabel()) ?>
         </a>
     </li>

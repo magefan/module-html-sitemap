@@ -19,7 +19,7 @@ $openLinks = ($block->getOpenLinks() == 1) ? '' : 'target="_blank"';
     <?php if (in_array('2', $displayInArray)): ?>
     <li>
         <a href="<?= $block->escapeUrl($block->getHref()) ?>"
-           name="footer_htmlsitemap_link"<?= $openLinks ?>>
+           name="footer_htmlsitemap_link" <?= $openLinks ?>>
             <?= $block->escapeHtml($block->getLabel()) ?>
         </a>
     </li>
