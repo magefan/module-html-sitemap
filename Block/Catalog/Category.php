@@ -9,8 +9,8 @@ namespace Magefan\HtmlSitemap\Block\Catalog;
 use Magento\Catalog\Model\ResourceModel\Category\Collection;
 use Magento\Framework\View\Element\Template;
 use Magefan\HtmlSitemap\Model\Config;
-use Magento\Catalog\Helper\Category as CategoryHelper;
 use Magento\Catalog\Model\ResourceModel\Category\CollectionFactory;
+use \Magento\Catalog\Model\CategoryFactory;
 
 class Category extends Template
 {
@@ -18,11 +18,6 @@ class Category extends Template
     const XML_PATH_TO_CATALOG_CATEGORY_DEPTH = 'mfhs/categorylinks/maxdepth';
     const XML_PATH_TO_CATALOG_CATEGORY_VIEW_MORE = 'mfhs/categorylinks/displaymore';
     const XML_PATH_TO_CATALOG_CATEGORY_LIMIT = 'mfhs/categorylinks/maxnumberlinks';
-
-    /**
-     * @var CategoryHelper
-     */
-    private $categoryHelper;
 
     /**
      * @var array
@@ -40,14 +35,14 @@ class Category extends Template
     private $config;
 
     /**
-     * @var array
-     */
-    private $ignoredLinks;
-
-    /**
      * @var CollectionFactory
      */
     private $collectionFactory;
+
+    /**
+     * @var CategoryFactory
+     */
+    private $categoryFactory;
 
     /**
      * @var array
@@ -55,24 +50,23 @@ class Category extends Template
     private $excludedCategoriesIds = [];
 
     /**
-     * Category constructor.
      * @param Template\Context $context
-     * @param CategoryHelper $categoryHelper
      * @param Config $config
+     * @param CollectionFactory $collectionFactory
+     * @param CategoryFactory $categoryFactory
      * @param array $data
      */
     public function __construct(
         Template\Context $context,
-        CategoryHelper $categoryHelper,
         Config $config,
         CollectionFactory $collectionFactory,
+        CategoryFactory $categoryFactory,
         array $data = []
     ) {
         parent::__construct($context, $data);
-        $this->categoryHelper = $categoryHelper;
         $this->config = $config;
-        $this->ignoredLinks = $config->getIgnoredLinks();
         $this->collectionFactory = $collectionFactory;
+        $this->categoryFactory = $categoryFactory;
     }
 
     /**
@@ -103,14 +97,13 @@ class Category extends Template
     {
         $k = 'grouped_childes';
         if (!$this->hasData($k)) {
-             $allGroupedChildes = $this->getAllGroupedChildes();
+            $allGroupedChildes = $this->getAllGroupedChildes();
             $limit = $this->config->getConfig(self::XML_PATH_TO_CATALOG_CATEGORY_LIMIT);
             $groupedChildes = array_slice($allGroupedChildes, 0, $limit);
             $this->setData($k, $groupedChildes);
         }
         return $this->getData($k);
     }
-
 
     /**
      * @param bool $toLoad
@@ -120,25 +113,58 @@ class Category extends Template
     {
         $k = 'all_grouped_childes';
         if (!$this->hasData($k)) {
-            $categories = $this->categoryHelper->getStoreCategories(false, true, false)
-                ->setOrder('position', 'ASC');
-            if (!empty($this->ignoredLinks)) {
-                $categories->addAttributeToFilter('url_key', ['nin' => $this->config->getIgnoredLinks()]);
+            $categories = $this->getStoreCategories();
+            if (null !== $categories) {
+                $this->setData($k, $this->getCategoryTree($categories));
+            } else {
+                $this->setData($k, []);
             }
-
-            $maxDepth = $this->config->getConfig(self::XML_PATH_TO_CATALOG_CATEGORY_DEPTH) + 1;
-            if ($maxDepth) {
-                $categories->addAttributeToFilter('level', ['lteq' => $maxDepth]);
-            }
-
-            if ($this->getExcludedCategoriesIds()) {
-                $categories->addAttributeToFilter('entity_id', ['nin' => $this->getExcludedCategoriesIds()]);
-            }
-
-            $this->setData($k, $this->getCategoryTree($categories));
         }
 
         return $this->getData($k);
+    }
+
+    /**
+     * @return Collection|\Magento\Framework\Data\Collection\AbstractDb|null
+     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     */
+    private function getStoreCategories()
+    {
+        $parent = $this->_storeManager->getStore()->getRootCategoryId();
+
+        /**
+         * Check if parent node of the store still exists
+         */
+        $category = $this->categoryFactory->create();
+        /* @var $category ModelCategory */
+        if (!$category->checkId($parent)) {
+            return null;
+        }
+
+        $categories = $this->collectionFactory->create()
+            ->addAttributeToSelect('*')
+            ->addIsActiveFilter()
+            ->addFieldToFilter('path', ['like' => '%/' . $parent . '/%']);
+
+
+        $categories->setOrder('position', 'ASC');
+
+        $ignoredLinks = $this->config->getIgnoredLinks();
+        if (!empty($ignoredLinks)) {
+            $categories->addAttributeToFilter('url_key', ['nin' => $ignoredLinks]);
+        }
+
+        $maxDepth = $this->config->getConfig(self::XML_PATH_TO_CATALOG_CATEGORY_DEPTH) + 1;
+        if ($maxDepth) {
+            $categories->addAttributeToFilter('level', ['lteq' => $maxDepth]);
+        }
+
+        if ($excludedCategoriesIds = $this->getExcludedCategoriesIds()) {
+            $categories->addAttributeToFilter('entity_id', ['nin' => $excludedCategoriesIds]);
+        }
+
+        return $categories;
     }
 
     /**
