@@ -10,7 +10,7 @@ use Magento\Catalog\Model\ResourceModel\Category\Collection;
 use Magento\Framework\View\Element\Template;
 use Magefan\HtmlSitemap\Model\Config;
 use Magento\Catalog\Model\ResourceModel\Category\CollectionFactory;
-use \Magento\Catalog\Model\CategoryFactory;
+use Magento\Catalog\Model\CategoryFactory;
 
 class Category extends Template
 {
