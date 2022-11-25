@@ -100,8 +100,9 @@ class Category extends Template
 
             $array = $array->addFieldToFilter('mf_exclude_html_sitemap', 0)
                 ->setOrder('position')
-                ->setPageSize($pageSize)
                 ->getTreeOrderedArray();
+            $array = array_slice($array, 0, $pageSize);
+
 
             foreach ($array as $key => $item) {
                 $maxDepth = $this->config->getConfig(self::XML_PATH_TO_BLOG_CATEGORY_DEPTH);
