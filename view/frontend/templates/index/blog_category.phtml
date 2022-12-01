@@ -11,10 +11,10 @@
 
 $items = $block->getGroupedChildes();
 ?>
+
 <?php if (count($items)) { ?>
     <div class="sitemap-item-type sitemap-item-section">
         <h2><?= $block->escapeHtml(__($block->getBlockTitle())) ?></h2>
-        <br />
         <div class="widget block block-categories" data-bind="scope: 'categories'">
             <div class="accordion"  id="accordion-2">
                 <?php
@@ -48,7 +48,7 @@ $items = $block->getGroupedChildes();
                 ?>
             </div>
             <?php if ($block->showViewMore()): ?>
-                <a href="<?= $block->escapeUrl($block->getUrl('*/blog_category/categories'))?>" style="color: red; padding: 5px;">
+                <a class="view-more" href="<?= $block->escapeUrl($block->getUrl('*/blog_category/categories'))?>">
                     <?= $block->escapeHtml(__('View more'))?>
                 </a>
             <?php endif; ?>
