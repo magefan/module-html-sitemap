@@ -70,7 +70,10 @@
 /category-title/*</links>
             </ignored>
             <seo>
+                <title/>
                 <metatitle>Sitemap</metatitle>
+                <metadescription/>
+                <metakeywords/>
             </seo>
         </mfhs>
     </default>
