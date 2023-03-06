@@ -46,7 +46,7 @@ $items = $block->getGroupedChildes();
                 ?>
             </div>
             <?php if ($block->showViewMore()): ?>
-                <a class="view-more" href="<?= $block->escapeUrl($block->getUrl('*/catalog_category/categories'))?>" style="color: red; padding: 5px;">
+                <a class="view-more" href="<?= $block->escapeUrl($block->getUrl('*/catalog_category/categories'))?>" >
                     <?= $block->escapeHtml(__('View more'))?>
                 </a>
             <?php endif; ?>

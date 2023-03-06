@@ -24,7 +24,7 @@ $pages = $block->getCmsPages();
         <?php endforeach; ?>
         </div>
         <?php if ($block->showViewMore()): ?>
-            <a class="view-more" href="<?= $block->escapeUrl($block->getUrl('*/cms_page/page'))?>" style="color: red; padding: 5px;">
+            <a class="view-more" href="<?= $block->escapeUrl($block->getUrl('*/cms_page/page'))?>" >
                 <?= $block->escapeHtml(__('View more'))?>
             </a>
         <?php endif; ?>

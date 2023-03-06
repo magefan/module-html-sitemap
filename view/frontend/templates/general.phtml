@@ -6,7 +6,7 @@
 ?>
 
 <div class="sitemap-search">
-    <input id="html-sitemap-search" placeholder="Search" style="border-radius: 15px; padding: 15px;" type="text"/>
+    <input id="html-sitemap-search" placeholder="<?= $block->escapeHtml(__('Search')) ?>" style="border-radius: 15px; padding: 15px;" type="text"/>
 </div>
 
 <style>
@@ -34,7 +34,7 @@
     [class*="htmlsitemap-"] .sitemap-item-type a:hover {text-decoration: underline;}
     [class*="htmlsitemap-"] .sitemap-item-wrap .sitemap-item {font-size: 14px;}
     [class*="htmlsitemap-"] .sitemap-item-wrap .sitemap-item:hover {text-decoration: underline;}
-    [class*="htmlsitemap-"] .sitemap-item-type .view-more {display: inline-block;color: red;margin-top: 0;margin-left: 0;}
+    [class*="htmlsitemap-"] .sitemap-item-type .view-more {display: inline-block;margin-top: 0;margin-left: 0;}
 
     @media (max-width: 1023px) {
         [class*="htmlsitemap-"] .sitemap-item-wrap {display: grid;grid-gap: 10px;grid-template-columns: repeat(3, 1fr);}

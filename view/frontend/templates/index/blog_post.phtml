@@ -23,7 +23,7 @@ $posts = $block->getPostsCollection();
     <?php endforeach; ?>
     </div>
     <?php if ($block->showViewMore()): ?>
-        <a class="view-more" href="<?= $block->escapeUrl($block->getUrl('*/blog_post/post'))?>" style="color: red; padding: 5px;">
+        <a class="view-more" href="<?= $block->escapeUrl($block->getUrl('*/blog_post/post'))?>">
             <?= $block->escapeHtml(__('View more'))?>
         </a>
     <?php endif; ?>
