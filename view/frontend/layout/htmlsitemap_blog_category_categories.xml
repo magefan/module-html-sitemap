@@ -7,6 +7,31 @@
 -->
 <page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
 	<body>
+        <referenceBlock name="breadcrumbs">
+            <action method="addCrumb">
+                <argument name="crumbName" xsi:type="string" translate="true">Home</argument>
+                <argument name="crumbInfo" xsi:type="array">
+                    <item name="title" xsi:type="string" translate="true">Home</item>
+                    <item name="label" xsi:type="string" translate="true">Home</item>
+                    <item name="link" xsi:type="string">{{baseUrl}}</item>
+                </argument>
+            </action>
+            <action method="addCrumb">
+                <argument name="crumbName" xsi:type="string" translate="true">Sitemap</argument>
+                <argument name="crumbInfo" xsi:type="array">
+                    <item name="title" xsi:type="string" translate="true">Sitemap</item>
+                    <item name="label" xsi:type="string" translate="true">Sitemap</item>
+                    <item name="link" xsi:type="string">{{baseUrl}}/htmlsitemap</item>
+                </argument>
+            </action>
+            <action method="addCrumb">
+                <argument name="crumbName" xsi:type="string" translate="true">BlogCategories</argument>
+                <argument name="crumbInfo" xsi:type="array">
+                    <item name="title" xsi:type="string" translate="true">Blog Categories</item>
+                    <item name="label" xsi:type="string" translate="true">Blog Categories</item>
+                </argument>
+            </action>
+        </referenceBlock>
 		<referenceContainer name="content">
             <block name="html-sitemap-general" template="Magefan_HtmlSitemap::general.phtml"/>
 			<block class="Magefan\HtmlSitemap\Block\Blog\Category" ifconfig="mfblog/general/enabled" name="blog.category" template="Magefan_HtmlSitemap::blog/category.phtml"/>
