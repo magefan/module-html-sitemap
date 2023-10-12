@@ -4,13 +4,16 @@
  * Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
  */
 
-use Magefan\HtmlSitemap\Block\Link;
-use Magento\Framework\Escaper;
-
-/** @var Link $block */
-/** @var Escaper $escaper */
+/** @var \Magefan\HtmlSitemap\Block\Link $block */
+/** @var \Magento\Framework\Escaper $escaper */
 
 $openLinks = $block->getOpenLinks() == 1 ? '' : 'target="_blank"';
+?>
+<?php
+if (!isset($escaper)) {
+    /* Compatability fix for old Magento versions */
+    $escaper = $block;
+}
 ?>
 <?php if ($block->canShowSitemapLink()): ?>
     <li>

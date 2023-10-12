@@ -96,6 +96,6 @@ class Link extends \Magento\Framework\View\Element\Html\Link
      */
     private function getDisplayIn(): array
     {
-        return explode(',', $this->config->displayIn());
+        return explode(',', $this->config->displayIn() ?: '');
     }
 }
