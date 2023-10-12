@@ -6,6 +6,8 @@
 
 namespace Magefan\HtmlSitemap\Block;
 
+use Magefan\HtmlSitemap\Model\Config;
+
 class Link extends \Magento\Framework\View\Element\Html\Link
 {
     /**
@@ -14,16 +16,24 @@ class Link extends \Magento\Framework\View\Element\Html\Link
     protected $_url;
 
     /**
+     * @var Config
+     */
+    private Config $config;
+
+    /**
      * @param \Magento\Framework\View\Element\Template\Context $context
-     * @param \Magefan\HtmlSitemap\Model\Url $url
+     * @param \Magento\Framework\UrlInterface $url
+     * @param Config $config
      * @param array $data
      */
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         \Magento\Framework\UrlInterface $url,
+        Config $config,
         array $data = []
     ) {
         $this->_url = $url;
+        $this->config = $config;
         parent::__construct($context, $data);
     }
 
@@ -71,5 +81,21 @@ class Link extends \Magento\Framework\View\Element\Html\Link
             return '';
         }
         return parent::_toHtml();
+    }
+
+    /**
+     * @return bool
+     */
+    public function canShowSitemapLink(): bool
+    {
+        return in_array('1', $this->getDisplayIn());
+    }
+
+    /**
+     * @return array
+     */
+    private function getDisplayIn(): array
+    {
+        return explode(',', $this->config->displayIn());
     }
 }
