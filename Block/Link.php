@@ -18,7 +18,7 @@ class Link extends \Magento\Framework\View\Element\Html\Link
     /**
      * @var Config
      */
-    private Config $config;
+    private $config;
 
     /**
      * @param \Magento\Framework\View\Element\Template\Context $context
