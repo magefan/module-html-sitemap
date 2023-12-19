@@ -11,6 +11,8 @@ use Magento\Framework\View\Element\Template;
 use Magento\Cms\Model\ResourceModel\Page\CollectionFactory as PageCollectionFactory;
 use Magefan\HtmlSitemap\Model\Config;
 use Magento\Store\Model\StoreManagerInterface;
+use Magento\Framework\UrlInterface;
+use Magento\Framework\View\Page\Config as PageConfig;
 
 class Page extends Template
 {
@@ -43,6 +45,16 @@ class Page extends Template
     private $ignoredLinks;
 
     /**
+     * @var UrlInterface
+     */
+    private $url;
+
+    /**
+     * @var PageConfig
+     */
+    protected $pageConfig;
+
+    /**
      * Page constructor.
      * @param Template\Context $context
      * @param PageCollectionFactory $pageCollectionFactory
@@ -55,12 +67,16 @@ class Page extends Template
         PageCollectionFactory $pageCollectionFactory,
         Config $config,
         StoreManagerInterface $storeManager,
+        UrlInterface $url,
+        PageConfig $pageConfig,
         array $data = []
     ) {
         parent::__construct($context, $data);
         $this->pageCollectionFactory = $pageCollectionFactory;
         $this->config = $config;
         $this->storeManager = $storeManager;
+        $this->url = $url;
+        $this->pageConfig = $pageConfig;
         $this->ignoredLinks = $config->getIgnoredLinks();
     }
 
@@ -163,6 +179,19 @@ class Page extends Template
                 $this->_escaper->escapeHtml($title)
             );
         }
+
+        $canonicalUrl = $this->url->getCurrentUrl();
+        $page = (int)$this->_request->getParam($this->getPageParamName());
+        if ($page > 1) {
+            $canonicalUrl .= ((false === strpos($canonicalUrl, '?')) ? '?' : '&')
+                . 'p=' . $page;
+        }
+
+        $this->pageConfig->addRemotePageAsset(
+            $canonicalUrl,
+            'canonical',
+            ['attributes' => ['rel' => 'canonical']]
+        );
 
         return $this;
     }

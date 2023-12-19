@@ -13,8 +13,10 @@ use Magento\Catalog\Model\Product\Attribute\Source\Status;
 use Magento\Catalog\Model\Product\Visibility;
 use Magento\Framework\View\Element\Template;
 use Magento\Store\Model\StoreManagerInterface;
+use Magento\Framework\UrlInterface;
+use Magefan\HtmlSitemap\Block\AbstractSitemap;
 
-class Product extends Template
+class Product extends AbstractSitemap
 {
     const XML_PATH_TO_CATALOG_CATEGORY_BLOCK_TITLE = 'mfhs/productlinks/title';
     const XML_PATH_TO_CATALOG_PRODUCTS_LIMIT = 'mfhs/productlinks/maxnumberlinks';
@@ -63,10 +65,12 @@ class Product extends Template
      * @param Visibility $visibility
      * @param Config $config
      * @param StoreManagerInterface $storeManager
+     * @param UrlInterface $url
      * @param array $data
      */
     public function __construct(
         Template\Context $context,
+        UrlInterface $url,
         CollectionFactory $productCollectionFactory,
         Status $status,
         Visibility $visibility,
@@ -74,7 +78,7 @@ class Product extends Template
         StoreManagerInterface $storeManager,
         array $data = []
     ) {
-        parent::__construct($context, $data);
+        parent::__construct($context, $url, $data);
         $this->productCollectionFactory = $productCollectionFactory;
         $this->status = $status;
         $this->visibility = $visibility;
@@ -176,20 +180,4 @@ class Product extends Template
         return $this->excludedProductsIds;
     }
 
-
-    /**
-     * @return $this|Product
-     */
-    protected function _prepareLayout()
-    {
-        parent::_prepareLayout();
-
-        $title = $this->getBlockTitle();
-
-        if ($title) {
-            $this->pageConfig->getTitle()->set( __('Sitemap') . ' - ' .  $this->getBlockTitle());
-        }
-
-        return $this;
-    }
 }
