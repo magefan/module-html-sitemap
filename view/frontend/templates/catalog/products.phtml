@@ -1,0 +1,45 @@
+<?php
+/**
+ * Copyright © Magefan (support@magefan.com). All rights reserved.
+ * Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+ */
+
+/**
+ * @var $block \Magefan\HtmlSitemap\Block\Catalog\Product
+ */
+?>
+
+<div class="sitemap-item-type sitemap-item-section">
+
+    <?php
+    $lettersArray = range('A', 'Z');
+    $lettersArray[] = '#';
+    $productCollection = $block->getItems();
+
+    foreach ($lettersArray as $letter) {
+        $productsArray = [];
+         foreach ($productCollection as $product) {
+            if (mb_strtoupper(substr($product->getName(), 0, 1)) == $letter || $letter == '#') {
+                $productsArray[] = ['name' => $product->getName(), 'url' => $product->getUrl()];
+//                $productCollection->removeItemByKey($product->getEntityId());
+            }
+        }
+
+        if (!$productsArray) {
+            continue;
+        }
+        ?>
+
+        <div class="sitemap-item-section">
+            <p>
+                <strong><?= $block->escapeHtml($letter); ?></strong>
+            </p>
+
+            <div class="sitemap-item-wrap">
+                <?php foreach ($productsArray as $product): ?>
+                    <a href="<?= $block->escapeUrl($product['url']) ?>" title="<?= $block->escapeHtml($product['name']) ?>"><?= $block->escapeHtml($product['name']) ?></a>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    <?php } ?>
+</div>

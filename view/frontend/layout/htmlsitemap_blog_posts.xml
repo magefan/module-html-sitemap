@@ -21,20 +21,20 @@
                 <argument name="crumbInfo" xsi:type="array">
                     <item name="title" xsi:type="string" translate="true">Sitemap</item>
                     <item name="label" xsi:type="string" translate="true">Sitemap</item>
+                    <item name="link" xsi:type="string">{{baseUrl}}htmlsitemap</item>
+                </argument>
+            </action>
+            <action method="addCrumb">
+                <argument name="crumbName" xsi:type="string" translate="true">BlogPosts</argument>
+                <argument name="crumbInfo" xsi:type="array">
+                    <item name="title" xsi:type="string" translate="true">Blog Posts</item>
+                    <item name="label" xsi:type="string" translate="true">Blog Posts</item>
                 </argument>
             </action>
         </referenceBlock>
-
 		<referenceContainer name="content">
             <block name="html-sitemap-general" template="Magefan_HtmlSitemap::general.phtml"/>
-            <block class="Magefan\HtmlSitemap\Block\Sitemap" name="magefan.htmlsitemap">
-                <block class="Magefan\HtmlSitemap\Block\Index\Catalog\Categories" name="index.catalog.category" template="Magefan_HtmlSitemap::index/catalog/categories.phtml" ifconfig="mfhs/categorylinks/displaycategorylinks"/>
-                <block class="Magefan\HtmlSitemap\Block\Index\Catalog\Products" name="index.catalog.product" template="Magefan_HtmlSitemap::index/catalog/products.phtml" ifconfig="mfhs/productlinks/displayproductlinks"/>
-                <block class="Magefan\HtmlSitemap\Block\Index\Blog\Posts" name="magefan.htmlsitemap.blog.post" template="Magefan_HtmlSitemap::index/blog/posts.phtml" ifconfig="mfhs/blogpostlinks/displaypostlinks"/>
-                <block class="Magefan\HtmlSitemap\Block\Index\Blog\Categories" name="index.blog.category" template="Magefan_HtmlSitemap::index/blog/categories.phtml" ifconfig="mfhs/blogcategorylinks/displayblogcategorylinks"/>
-                <block class="Magefan\HtmlSitemap\Block\Index\Additional\Links" name="index.additional.links" template="Magefan_HtmlSitemap::index/additional/links.phtml" ifconfig="mfhs/additionallinks/displaylinks"/>
-                <block class="Magefan\HtmlSitemap\Block\Index\Cms\Pages" name="index.cms.pages" template="Magefan_HtmlSitemap::index/cms/pages.phtml" ifconfig="mfhs/cmspagelinks/displaycmspagelinks"/>
-            </block>
-        </referenceContainer>
+			<block class="Magefan\HtmlSitemap\Block\Blog\Posts" ifconfig="mfblog/general/enabled" name="blog.post" template="Magefan_HtmlSitemap::blog/posts.phtml"/>
+		</referenceContainer>
 	</body>
 </page>

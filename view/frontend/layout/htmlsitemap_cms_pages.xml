@@ -7,7 +7,7 @@
 -->
 <page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
 	<body>
-        <referenceBlock name="breadcrumbs">
+		<referenceBlock name="breadcrumbs">
             <action method="addCrumb">
                 <argument name="crumbName" xsi:type="string" translate="true">Home</argument>
                 <argument name="crumbInfo" xsi:type="array">
@@ -25,18 +25,16 @@
                 </argument>
             </action>
             <action method="addCrumb">
-                <argument name="crumbName" xsi:type="string" translate="true">AdditionalLincs</argument>
+                <argument name="crumbName" xsi:type="string" translate="true">Pages</argument>
                 <argument name="crumbInfo" xsi:type="array">
-                    <item name="title" xsi:type="string" translate="true">Additional Links</item>
-                    <item name="label" xsi:type="string" translate="true">Additional Links</item>
+                    <item name="title" xsi:type="string" translate="true">Pages</item>
+                    <item name="label" xsi:type="string" translate="true">Pages</item>
                 </argument>
             </action>
         </referenceBlock>
-
 		<referenceContainer name="content">
             <block name="html-sitemap-general" template="Magefan_HtmlSitemap::general.phtml"/>
-			<!--<block class="Magefan\HtmlSitemap\Block\Additional\List" name="additional.list" template="Magefan_HtmlSitemap::additional/list.phtml"/>-->
-			<block as="additional_additional" class="Magefan\HtmlSitemap\Block\Additional\Links" name="additional.links" template="Magefan_HtmlSitemap::additional/links.phtml"/>
+			<block as="cms_page" class="Magefan\HtmlSitemap\Block\Cms\Pages" name="cms.page" template="Magefan_HtmlSitemap::cms/pages.phtml"/>
 		</referenceContainer>
 	</body>
 </page>

@@ -1,0 +1,33 @@
+<?php
+/**
+ * Copyright © Magefan (support@magefan.com). All rights reserved.
+ * Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+ */
+?>
+<?php
+/**
+ * @var \Magefan\HtmlSitemap\Block\Index\Additional\Links $block
+ */
+
+$links = $block->getItems();
+?>
+
+<?php if (count($links)): ?>
+    <div class="sitemap-item-type sitemap-item-section">
+        <h2 class="sitemap-title"><?= $block->escapeHtml(__($block->getBlockTitle())) ?></h2>
+        <div class="sitemap-item-wrap">
+            <?php foreach ($links as $link): ?>
+            <?php if ($link): ?>
+                <a class="sitemap-item" href="<?= $block->escapeUrl($block->getBaseUrl() . $link['url'])?>" title="<?= $block->escapeHtml($link['title'])?>">
+                    <?= $block->escapeHtml($link['title'])?>
+                </a>
+            <?php endif; ?>
+        <?php endforeach; ?>
+        </div>
+        <?php if ($block->showViewMore()): ?>
+            <a class="view-more" href="<?= $block->escapeUrl($block->getUrl('*/additional/links'))?>">
+                <?= $block->escapeHtml(__('View more'))?>
+            </a>
+        <?php endif; ?>
+    </div>
+<?php endif; ?>
