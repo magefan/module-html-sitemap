@@ -1,0 +1,32 @@
+<?php
+/**
+ * Copyright © Magefan (support@magefan.com). All rights reserved.
+ * Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+ */
+
+/**
+ * @var \Magefan\HtmlSitemap\Block\AbstractBlock $block
+ */
+
+$linkCollection = $block->getItemsGroupedByLetter();
+?>
+
+<?php if (count($linkCollection)) {?>
+    <div class="sitemap-item-type sitemap-item-section">
+        <?php foreach ($linkCollection as $letter => $linkItems) { ?>
+            <div class="sitemap-item-section">
+                <p>
+                    <strong><?= $block->escapeHtml($letter); ?></strong>
+                </p>
+
+                <div class="sitemap-item-wrap">
+                    <?php if ($linkItems) { ?>
+                        <?php foreach ($linkItems as $linkItem): ?>
+                            <a href="<?= $block->escapeUrl($linkItem->getUrl()) ?>" title="<?= $block->escapeHtml($linkItem->getName()) ?>"><?= $block->escapeHtml($linkItem->getName()) ?></a>
+                        <?php endforeach; ?>
+                    <?php } ?>
+                </div>
+            </div>
+        <?php } ?>
+    </div>
+<?php } ?>

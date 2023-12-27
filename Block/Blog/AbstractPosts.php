@@ -7,26 +7,23 @@ declare(strict_types=1);
 
 namespace Magefan\HtmlSitemap\Block\Blog;
 
-use Magento\Framework\DataObject;
+use Magefan\HtmlSitemap\Block\AbstractBlock;
 use Magento\Framework\View\Element\Template;
 use Magefan\HtmlSitemap\Model\Config;
+use Magento\Framework\DataObject;
 use Magefan\HtmlSitemap\Model\BlogFactory;
 
-abstract class AbstractPosts extends Template
+abstract class AbstractPosts extends AbstractBlock
 {
-    const XML_PATH_TO_BLOG_POST_TITLE = 'mfhs/blogpostlinks/title';
-    const XML_PATH_TO_BLOG_POSTS_LIMIT = 'mfhs/blogpostlinks/maxnumberlinks';
-    const XML_PATH_TO_BLOG_POST_VIEW_MORE = 'mfhs/blogcategorylinks/displaymore';
-
-    /**
-     * @var Config
-     */
-    protected $config;
-
     /**
      * @var BlogFactory
      */
     protected $blogFactory;
+
+    /**
+     * @var string
+     */
+    protected $type = 'blogpostlinks';
 
     /**
      * Post constructor.
@@ -41,17 +38,8 @@ abstract class AbstractPosts extends Template
         BlogFactory $blogFactory,
         array $data = []
     ) {
-        parent::__construct($context, $data);
-        $this->config = $config;
+        parent::__construct($context, $config, $data);
         $this->blogFactory = $blogFactory;
-    }
-
-    /**
-     * @return string
-     */
-    public function getBlockTitle()
-    {
-        return (string)$this->config->getConfig(self::XML_PATH_TO_BLOG_POST_TITLE);
     }
 
     /**
@@ -62,19 +50,19 @@ abstract class AbstractPosts extends Template
     {
         $k = 'collection';
         if (null === $this->getData($k)) {
-            $items = $this->blogFactory->createPostCollection()
+            $collection = $this->blogFactory->createPostCollection()
                 ->addActiveFilter()
                 ->addStoreFilter($this->_storeManager->getStore()->getId())
                 ->addFieldToFilter('mf_exclude_html_sitemap', 0);
 
             if ($ignoredLinks = $this->config->getIgnoredLinks()) {
-                $items->addFieldToFilter('identifier', ['nin' => $ignoredLinks]);
+                $collection->addFieldToFilter('identifier', ['nin' => $ignoredLinks]);
             }
 
             if ($pageSize = $this->getPageSize()) {
-                $items->setPageSize($pageSize);
+                $collection->setPageSize($pageSize);
             }
-            $this->setData($k, $items);
+            $this->setData($k, $collection);
         }
 
         return $this->getData($k);
@@ -103,13 +91,12 @@ abstract class AbstractPosts extends Template
         return $this->getData($k);
     }
 
-
     /**
-     * @return int
+     * @return string
      */
-    protected function getPageSize(): int
+    public function getCurrentTypeHtmlSitemapUrl()
     {
-        return 0;
+        return $this->getUrl('htmlsitemap/blog/posts');
     }
 
     /**

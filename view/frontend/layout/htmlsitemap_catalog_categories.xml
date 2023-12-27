@@ -5,36 +5,11 @@
  * Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
  */
 -->
-<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+<page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
 	<body>
-        <referenceBlock name="breadcrumbs">
-            <action method="addCrumb">
-                <argument name="crumbName" xsi:type="string" translate="true">Home</argument>
-                <argument name="crumbInfo" xsi:type="array">
-                    <item name="title" xsi:type="string" translate="true">Home</item>
-                    <item name="label" xsi:type="string" translate="true">Home</item>
-                    <item name="link" xsi:type="string">{{baseUrl}}</item>
-                </argument>
-            </action>
-            <action method="addCrumb">
-                <argument name="crumbName" xsi:type="string" translate="true">Sitemap</argument>
-                <argument name="crumbInfo" xsi:type="array">
-                    <item name="title" xsi:type="string" translate="true">Sitemap</item>
-                    <item name="label" xsi:type="string" translate="true">Sitemap</item>
-                    <item name="link" xsi:type="string">{{baseUrl}}htmlsitemap</item>
-                </argument>
-            </action>
-            <action method="addCrumb">
-                <argument name="crumbName" xsi:type="string" translate="true">Categories</argument>
-                <argument name="crumbInfo" xsi:type="array">
-                    <item name="title" xsi:type="string" translate="true">Categories</item>
-                    <item name="label" xsi:type="string" translate="true">Categories</item>
-                </argument>
-            </action>
-        </referenceBlock>
 		<referenceContainer name="content">
             <block name="html-sitemap-general" template="Magefan_HtmlSitemap::general.phtml"/>
-			<block as="catalog_category" class="Magefan\HtmlSitemap\Block\Catalog\Categories" name="catalog.category" template="Magefan_HtmlSitemap::catalog/categories.phtml"/>
+			<block as="catalog_category" class="Magefan\HtmlSitemap\Block\Catalog\Categories" name="catalog.category" template="Magefan_HtmlSitemap::category_tree.phtml"/>
 		</referenceContainer>
 	</body>
 </page>

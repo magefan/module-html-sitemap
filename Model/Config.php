@@ -31,6 +31,9 @@ class Config
      */
     const XML_PATH_OPENLINKS = 'mfhs/general/openlinks';
 
+    /**
+     * Ignored links
+     */
     const XML_PATH_TO_IGNORE_LIST = 'mfhs/ignored/links';
 
     /**
@@ -44,12 +47,18 @@ class Config
     protected $scopeConfig;
 
     /**
+     * @var array
+     */
+    private $ignoredLinks;
+
+    /**
      * Config constructor.
      * @param ScopeConfigInterface $scopeConfig
      */
     public function __construct(
         ScopeConfigInterface $scopeConfig
-    ) {
+    )
+    {
         $this->scopeConfig = $scopeConfig;
     }
 
@@ -85,29 +94,32 @@ class Config
      */
     public function getIgnoredLinks($storeId = null, $toUrlKeys = true)
     {
-        $ignoredLinks = [];
+        if (null === $this->ignoredLinks) {
+            $ignoredLinks = [];
 
-        $ignoredLinksFromConfig = $this->getConfig(self::XML_PATH_TO_IGNORE_LIST, $storeId);
-        if ($ignoredLinksFromConfig) {
-            $ignoredLinks = preg_split('/\s+/', $ignoredLinksFromConfig);
-        }
-
-        if ($toUrlKeys) {
-            $urlKeys = [];
-
-            foreach ($ignoredLinks as $link) {
-                $link = basename($link);
-                if (stripos($link, '.html') !== false) {
-                    $urlKeys[] = str_replace('.html', '', $link);
-                } else {
-                    $urlKeys[] = $link;
-                }
+            $ignoredLinksFromConfig = $this->getConfig(self::XML_PATH_TO_IGNORE_LIST, $storeId);
+            if ($ignoredLinksFromConfig) {
+                $ignoredLinks = preg_split('/\s+/', $ignoredLinksFromConfig);
             }
 
-            return (array)$urlKeys;
-        }
+            if ($toUrlKeys) {
+                $urlKeys = [];
 
-        return (array)$ignoredLinks;
+                foreach ($ignoredLinks as $link) {
+                    $link = basename($link);
+                    if (stripos($link, '.html') !== false) {
+                        $urlKeys[] = str_replace('.html', '', $link);
+                    } else {
+                        $urlKeys[] = $link;
+                    }
+                }
+
+                return (array)$urlKeys;
+            }
+
+            $this->ignoredLinks = (array)$ignoredLinks;
+        }
+        return $this->ignoredLinks;
     }
 
     /**
@@ -117,6 +129,55 @@ class Config
     public function isBlogEnabled($storeId = null)
     {
         return (bool)$this->getConfig(self::XML_PATH_BLOG_EXTENSION_ENABLED, $storeId);
+    }
+
+    /**
+     * @param string $type
+     * @param null $storeId
+     * @return string
+     */
+    public function getBlockTitle(string $type, $storeId = null): string
+    {
+        return $this->getConfig('mfhs/' . $type . '/title');
+    }
+
+    /**
+     * @param string $type
+     * @param null $storeId
+     * @return string
+     */
+    public function getBlockViewMore(string $type, $storeId = null): string
+    {
+        return $this->getConfig('mfhs/' . $type . '/displaymore');
+    }
+
+    /**
+     * @param string $type
+     * @param null $storeId
+     * @return string
+     */
+    public function getBlockPageSize(string $type, $storeId = null): string
+    {
+        return $this->getConfig('mfhs/' . $type . '/maxnumberlinks');
+    }
+
+    /**
+     * @param string $type
+     * @param null $storeId
+     * @return string
+     */
+    public function getBlockMaxDepth(string $type, $storeId = null): string
+    {
+        return $this->getConfig('mfhs/' . $type . '/maxdepth');
+    }
+
+    /**
+     * @param null $storeId
+     * @return string
+     */
+    public function getAdditionalLinks($storeId = null): string
+    {
+        return $this->getConfig('mfhs/additionallinks/links');
     }
 
     /**

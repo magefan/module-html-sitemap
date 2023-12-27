@@ -3,23 +3,25 @@
  * Copyright © Magefan (support@magefan.com). All rights reserved.
  * Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
  */
-?>
-<?php
+
 /**
- * @var \Magefan\HtmlSitemap\Block\Catalog\Categories $block
+ * @var \Magefan\HtmlSitemap\Block\AbstractBlock $block
  */
 
 $items = $block->getItems();
 ?>
-<?php if (count($items)) { ?>
+
+<?php if ($items && count($items)) { ?>
     <div class="sitemap-item-type sitemap-item-section">
-        <h2 class="sitemap-title"><?= $block->escapeHtml(__($block->getBlockTitle())) ?></h2>
+        <?php if ($this->showBlockTitle() && $block->getBlockTitle()) {?>
+            <h2 class="sitemap-title"><?= $block->escapeHtml(__($block->getBlockTitle())) ?></h2>
+        <?php } ?>
         <div class="widget block block-categories" data-bind="scope: 'categories'">
             <div class="accordion"  id="accordion-2">
                 <?php
-                $level = -1;
-                $first = true;
-                foreach ($items as $item) {
+                $level = 0;
+                $first = true; ?>
+                <?php foreach ($items as $item) {
                     $newLevel = $item->getLevel();
                     if ($level == $newLevel && !$first) {
                         echo '</li>';
@@ -36,17 +38,17 @@ $items = $block->getItems();
                         <a href="<?= $block->escapeUrl($item->getUrl()) ?>" title="<?= $block->escapeHtml($item->getName()) ?>">
                             <?= $block->escapeHtml($item->getName()) ?>
                         </a>
-                    <?php
-                    $level = $newLevel;
-                    $first = false;
-                }
+                        <?php
+                        $level = $newLevel;
+                        $first = false; ?>
 
+                <?php } ?>
+                <?php
                 $closedTags = ($level > 0) ? $level - 1 : 1;
-                echo str_repeat('</li></ul>', $closedTags);
-                ?>
+                echo str_repeat('</li></ul>', $closedTags); ?>
             </div>
             <?php if ($block->showViewMore()): ?>
-                <a class="view-more" href="<?= $block->escapeUrl($block->getUrl('*/catalog/categories'))?>" >
+                <a class="view-more" href="<?= $block->escapeUrl($block->getCurrentTypeHtmlSitemapUrl())?>" >
                     <?= $block->escapeHtml(__('View more'))?>
                 </a>
             <?php endif; ?>

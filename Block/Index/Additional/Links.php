@@ -11,33 +11,5 @@ use Magefan\HtmlSitemap\Block\Additional\AbstractLinks;
 
 class Links extends AbstractLinks
 {
-    /**
-     * @return int
-     */
-    protected function getPageSize(): int
-    {
-        return (int)$this->config->getConfig(self::XML_PATH_TO_ADDITIONAL_LINKS_LIMIT);
-    }
-
-    /**
-     * @return int
-     */
-    public function getSortOrder(): int
-    {
-        return (int)$this->config->getSortOrder('additionallinks');
-    }
-
-    /**
-     * @return bool
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
-     */
-    public function showViewMore(): bool
-    {
-        if ($this->config->getConfig(self::XML_PATH_TO_ADDITIONAL_LINKS_MORE)
-            && count($this->getItems()) > $this->getPageSize()
-        ) {
-            return true;
-        }
-        return false;
-    }
+    use \Magefan\HtmlSitemap\Block\Index\Block;
 }

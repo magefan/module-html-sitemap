@@ -7,13 +7,14 @@ declare(strict_types=1);
 
 namespace Magefan\HtmlSitemap\Block\Cms;
 
+use Magefan\HtmlSitemap\Block\AbstractBlock;
+use Magento\Framework\View\Element\Template;
+use Magefan\HtmlSitemap\Model\Config;
 use Magento\Framework\DataObject;
 use Magento\Cms\Model\ResourceModel\Page\Collection;
-use Magento\Framework\View\Element\Template;
 use Magento\Cms\Model\ResourceModel\Page\CollectionFactory as PageCollectionFactory;
-use Magefan\HtmlSitemap\Model\Config;
 
-abstract class AbstractPages extends Template
+abstract class AbstractPages extends AbstractBlock
 {
     const XML_PATH_TO_CMS_PAGE_BLOCK_TITLE = 'mfhs/cmspagelinks/title';
     const XML_PATH_TO_CMS_PAGE_LIMIT = 'mfhs/cmspagelinks/maxnumberlinks';
@@ -29,59 +30,32 @@ abstract class AbstractPages extends Template
     protected $pageCollectionFactory;
 
     /**
-     * @var Config
+     * @var string
      */
-    protected $config;
+    protected $type = 'cmspagelinks';
 
     /**
-     * Page constructor.
+     * AbstractPages constructor.
      * @param Template\Context $context
-     * @param PageCollectionFactory $pageCollectionFactory
      * @param Config $config
+     * @param PageCollectionFactory $pageCollectionFactory
      * @param array $data
      */
     public function __construct(
         Template\Context $context,
-        PageCollectionFactory $pageCollectionFactory,
         Config $config,
+        PageCollectionFactory $pageCollectionFactory,
         array $data = []
     ) {
-        parent::__construct($context, $data);
+        parent::__construct($context, $config, $data);
         $this->pageCollectionFactory = $pageCollectionFactory;
-        $this->config = $config;
-    }
-
-    /**
-     * @return string
-     */
-    public function getBlockTitle()
-    {
-        return (string)$this->config->getConfig(self::XML_PATH_TO_CMS_PAGE_BLOCK_TITLE);
     }
 
     /**
      * @return Collection
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function getCmsPagesList()
-    {
-        $pages = $this->pageCollectionFactory->create()
-            ->addStoreFilter($this->_storeManager->getStore()->getId());
-        if (!empty($this->ignoredLinks)) {
-            $pages->addFieldToFilter('identifier', ['nin' => $this->config->getIgnoredLinks()]);
-        }
-
-        $pages->addFieldToFilter('mf_exclude_html_sitemap', 0)
-            ->addFieldToFilter('is_active', 1);
-
-        return $pages;
-    }
-
-    /**
-     * @return Collection
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
-     */
-    public function getCollection()
+    protected function getCollection()
     {
         $k = 'collection';
         if (null === $this->getData($k)) {
@@ -121,11 +95,10 @@ abstract class AbstractPages extends Template
     }
 
     /**
-     * @return int
+     * @return string
      */
-    protected function getPageSize(): int
+    public function getCurrentTypeHtmlSitemapUrl()
     {
-        return 0;
+        return $this->getUrl('htmlsitemap/cms/pages');
     }
-
 }

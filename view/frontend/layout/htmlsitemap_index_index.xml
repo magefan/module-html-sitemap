@@ -7,33 +7,15 @@
 -->
 <page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
 	<body>
-        <referenceBlock name="breadcrumbs">
-            <action method="addCrumb">
-                <argument name="crumbName" xsi:type="string" translate="true">Home</argument>
-                <argument name="crumbInfo" xsi:type="array">
-                    <item name="title" xsi:type="string" translate="true">Home</item>
-                    <item name="label" xsi:type="string" translate="true">Home</item>
-                    <item name="link" xsi:type="string">{{baseUrl}}</item>
-                </argument>
-            </action>
-            <action method="addCrumb">
-                <argument name="crumbName" xsi:type="string" translate="true">Sitemap</argument>
-                <argument name="crumbInfo" xsi:type="array">
-                    <item name="title" xsi:type="string" translate="true">Sitemap</item>
-                    <item name="label" xsi:type="string" translate="true">Sitemap</item>
-                </argument>
-            </action>
-        </referenceBlock>
-
 		<referenceContainer name="content">
             <block name="html-sitemap-general" template="Magefan_HtmlSitemap::general.phtml"/>
-            <block class="Magefan\HtmlSitemap\Block\Sitemap" name="magefan.htmlsitemap">
-                <block class="Magefan\HtmlSitemap\Block\Index\Catalog\Categories" name="index.catalog.category" template="Magefan_HtmlSitemap::index/catalog/categories.phtml" ifconfig="mfhs/categorylinks/displaycategorylinks"/>
-                <block class="Magefan\HtmlSitemap\Block\Index\Catalog\Products" name="index.catalog.product" template="Magefan_HtmlSitemap::index/catalog/products.phtml" ifconfig="mfhs/productlinks/displayproductlinks"/>
-                <block class="Magefan\HtmlSitemap\Block\Index\Blog\Posts" name="magefan.htmlsitemap.blog.post" template="Magefan_HtmlSitemap::index/blog/posts.phtml" ifconfig="mfhs/blogpostlinks/displaypostlinks"/>
-                <block class="Magefan\HtmlSitemap\Block\Index\Blog\Categories" name="index.blog.category" template="Magefan_HtmlSitemap::index/blog/categories.phtml" ifconfig="mfhs/blogcategorylinks/displayblogcategorylinks"/>
-                <block class="Magefan\HtmlSitemap\Block\Index\Additional\Links" name="index.additional.links" template="Magefan_HtmlSitemap::index/additional/links.phtml" ifconfig="mfhs/additionallinks/displaylinks"/>
-                <block class="Magefan\HtmlSitemap\Block\Index\Cms\Pages" name="index.cms.pages" template="Magefan_HtmlSitemap::index/cms/pages.phtml" ifconfig="mfhs/cmspagelinks/displaycmspagelinks"/>
+            <block class="Magefan\HtmlSitemap\Block\Index" name="magefan.htmlsitemap">
+                <block class="Magefan\HtmlSitemap\Block\Index\Catalog\Categories" name="magefan.htmlsitemap.catalog.category" template="Magefan_HtmlSitemap::category_tree.phtml" ifconfig="mfhs/categorylinks/displaycategorylinks"/>
+                <block class="Magefan\HtmlSitemap\Block\Index\Catalog\Products" name="magefan.htmlsitemap.catalog.product" template="Magefan_HtmlSitemap::links_template.phtml" ifconfig="mfhs/productlinks/displayproductlinks"/>
+                <block class="Magefan\HtmlSitemap\Block\Index\Blog\Posts" name="magefan.htmlsitemap.blog.post" template="Magefan_HtmlSitemap::links_template.phtml" ifconfig="mfhs/blogpostlinks/displaypostlinks"/>
+                <block class="Magefan\HtmlSitemap\Block\Index\Blog\Categories" name="magefan.htmlsitemap.blog.category" template="Magefan_HtmlSitemap::category_tree.phtml" ifconfig="mfhs/blogcategorylinks/displayblogcategorylinks"/>
+                <block class="Magefan\HtmlSitemap\Block\Index\Additional\Links" name="magefan.htmlsitemap.additional.links" template="Magefan_HtmlSitemap::links_template.phtml" ifconfig="mfhs/additionallinks/displaylinks"/>
+                <block class="Magefan\HtmlSitemap\Block\Index\Cms\Pages" name="magefan.htmlsitemap.cms.pages" template="Magefan_HtmlSitemap::links_template.phtml" ifconfig="mfhs/cmspagelinks/displaycmspagelinks"/>
             </block>
         </referenceContainer>
 	</body>

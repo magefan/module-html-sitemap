@@ -7,95 +7,90 @@ declare(strict_types=1);
 
 namespace Magefan\HtmlSitemap\Block\Additional;
 
-use Magento\Framework\View\Element\Template;
-use Magefan\HtmlSitemap\Model\Config;
+use Magento\Framework\DataObject;
+use Magefan\HtmlSitemap\Block\AbstractBlock;
 
-abstract class AbstractLinks extends Template
+abstract class AbstractLinks extends AbstractBlock
 {
-    const XML_PATH_TO_ADDITIONAL_BLOCK_TITLE = 'mfhs/additionallinks/title';
-    const XML_PATH_TO_ADDITIONAL_LINKS = 'mfhs/additionallinks/links';
-    const XML_PATH_TO_ADDITIONAL_LINKS_LIMIT = 'mfhs/additionallinks/maxnumberlinks';
-    const XML_PATH_TO_ADDITIONAL_LINKS_MORE = 'mfhs/additionallinks/displaymore';
-
     /**
-     * @var Config
+     * @var string
      */
-    protected $config;
-
-    /**
-     * Additional constructor.
-     * @param Template\Context $context
-     * @param Config $config
-     * @param array $data
-     */
-    public function __construct(
-        Template\Context $context,
-        Config $config,
-        array $data = []
-    ) {
-        parent::__construct($context, $data);
-        $this->config = $config;
-    }
-
-    /**
-     * @return string
-     */
-    public function getBlockTitle()
-    {
-        return (string)$this->config->getConfig(self::XML_PATH_TO_ADDITIONAL_BLOCK_TITLE);
-    }
-
-    /**
-     * @return mixed
-     */
-    protected function getAdditionalLinks()
-    {
-        return $this->config->getConfig(self::XML_PATH_TO_ADDITIONAL_LINKS);
-    }
+    protected $type = 'additionallinks';
 
     /**
      * @return array
      */
-    public function getItems()
+    protected function getCollection()
     {
-        $k = 'items';
+        $k = 'collection';
         if (null === $this->getData($k)) {
-            $linksStr = $this->getAdditionalLinks();
-            $links = preg_split('/\r+/', $linksStr);
-            $items = [];
-
             $i = 0;
-            if (!empty($links)) {
-                foreach ($links as $link) {
-                    if ($pageSize = $this->getPageSize()) {
-                        if ($i >= $pageSize) {
-                            break;
-                        }
-                    }
-                    if (trim($link) != '') {
-                        $linkElements = explode('|', $link);
-
-                        if ($linkElements[0] == '/') {
-                            $linkElements[0] = '';
-                        }
-
-                        if (!in_array(trim($linkElements[0]), $this->config->getIgnoredLinks(null, false))) {
-                            $items[] = ['url' => $linkElements[0], 'title' => trim($linkElements[1], '()')];
-                            $i++;
-                        }
-                    }
+            $pageSize = $this->getPageSize();
+            $collection = [];
+            $links = $this->config->getAdditionalLinks() ?: '';
+            $links = str_replace(["\n", "\r"], [PHP_EOL, PHP_EOL], $links);
+            $links = explode(PHP_EOL, $links);
+            foreach ($links as $link) {
+                $link = trim($link);
+                $link = trim($link, '/');
+                if (!$link) {
+                    continue;
                 }
+
+                $linkData = explode('|', $link);
+
+                $url = trim($linkData[0]);
+
+                if (in_array($url, $this->config->getIgnoredLinks(null, false))) {
+                    continue;
+                }
+
+
+                $collection[] = new DataObject([
+                    'url' => $linkData[0],
+                    'name' => isset($linkData[1]) ? $linkData[1] : $linkData[0]
+                ]);
+                $i++;
+
+                if ($i >= $pageSize) {
+                    break;
+                }
+
             }
-            $this->setData($k, $items);
+
+            $this->setData($k, $collection);
         }
         return $this->getData($k);
     }
 
     /**
-     * @return int
+     * @return mixed
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    protected function getPageSize(): int
+    public function getItems()
     {
-        return 0;
+        $k = 'items';
+        if (null === $this->getData($k)) {
+            $items = [];
+            foreach ($this->getCollection() as $collectionItem) {
+                $item = new DataObject([
+                    'url' => $collectionItem->getUrl(),
+                    'name' => $collectionItem->getName(),
+                    'object' => $collectionItem
+                ]);
+                $items[] = $item;
+            }
+            $this->setData($k, $items);
+        }
+
+        return $this->getData($k);
+    }
+
+    /**
+     * @return string
+     */
+    public function getCurrentTypeHtmlSitemapUrl()
+    {
+        return $this->getUrl('htmlsitemap/additional/links');
     }
 }

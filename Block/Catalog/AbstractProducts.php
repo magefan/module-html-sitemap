@@ -7,19 +7,18 @@ declare(strict_types=1);
 
 namespace Magefan\HtmlSitemap\Block\Catalog;
 
+use Magefan\HtmlSitemap\Block\AbstractBlock;
+use Magento\Framework\View\Element\Template;
+use Magefan\HtmlSitemap\Model\Config;
+use Magento\Framework\DataObject;
 use Magento\Catalog\Model\ResourceModel\Product\Collection;
 use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory;
-use Magefan\HtmlSitemap\Model\Config;
 use Magento\Catalog\Model\Product\Attribute\Source\Status;
 use Magento\Catalog\Model\Product\Visibility;
-use Magento\Framework\View\Element\Template;
-use Magento\Framework\DataObject;
 
-abstract class AbstractProducts extends Template
+
+abstract class AbstractProducts extends AbstractBlock
 {
-    const XML_PATH_TO_CATALOG_CATEGORY_BLOCK_TITLE = 'mfhs/productlinks/title';
-    const XML_PATH_TO_CATALOG_PRODUCTS_LIMIT = 'mfhs/productlinks/maxnumberlinks';
-    const XML_PATH_TO_CATALOG_PRODUCT_VIEW_MORE = 'mfhs/categorylinks/displaymore';
 
     /**
      * @var CollectionFactory
@@ -37,45 +36,36 @@ abstract class AbstractProducts extends Template
     protected $visibility;
 
     /**
-     * @var Config
-     */
-    protected $config;
-
-    /**
      * @var
      */
     protected $excludedProductsIds;
 
     /**
+     * @var string
+     */
+    protected $type = 'productlinks';
+
+    /**
      * Product constructor.
      * @param Template\Context $context
+     * @param Config $config
      * @param CollectionFactory $productCollectionFactory
      * @param Status $status
      * @param Visibility $visibility
-     * @param Config $config
      * @param array $data
      */
     public function __construct(
         Template\Context $context,
+        Config $config,
         CollectionFactory $productCollectionFactory,
         Status $status,
         Visibility $visibility,
-        Config $config,
         array $data = []
     ) {
-        parent::__construct($context, $data);
+        parent::__construct($context, $config, $data);
         $this->productCollectionFactory = $productCollectionFactory;
         $this->status = $status;
         $this->visibility = $visibility;
-        $this->config = $config;
-    }
-
-    /**
-     * @return string
-     */
-    public function getBlockTitle()
-    {
-        return (string)$this->config->getConfig(self::XML_PATH_TO_CATALOG_CATEGORY_BLOCK_TITLE);
     }
 
     /**
@@ -133,6 +123,14 @@ abstract class AbstractProducts extends Template
     }
 
     /**
+     * @return string
+     */
+    public function getCurrentTypeHtmlSitemapUrl()
+    {
+        return $this->getUrl('htmlsitemap/catalog/products');
+    }
+
+    /**
      * @return array
      */
     private function getExcludedProductsIds()
@@ -145,11 +143,4 @@ abstract class AbstractProducts extends Template
         return $this->excludedProductsIds;
     }
 
-    /**
-     * @return int
-     */
-    protected function getPageSize(): int
-    {
-        return 0;
-    }
 }

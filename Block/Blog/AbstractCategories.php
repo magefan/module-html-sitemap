@@ -7,26 +7,23 @@ declare(strict_types=1);
 
 namespace Magefan\HtmlSitemap\Block\Blog;
 
-use Magefan\HtmlSitemap\Model\Config;
+use Magefan\HtmlSitemap\Block\AbstractBlock;
 use Magento\Framework\View\Element\Template;
+use Magefan\HtmlSitemap\Model\Config;
+use Magento\Framework\DataObject;
 use Magefan\HtmlSitemap\Model\BlogFactory;
 
-abstract class AbstractCategories extends Template
+abstract class AbstractCategories extends AbstractBlock
 {
-    const XML_PATH_TO_BLOG_CATEGORY_TITLE = 'mfhs/blogcategorylinks/title';
-    const XML_PATH_TO_BLOG_CATEGORY_DEPTH = 'mfhs/blogcategorylinks/maxdepth';
-    const XML_PATH_TO_BLOG_CATEGORY_VIEW_MORE = 'mfhs/blogcategorylinks/displaymore';
-    const XML_PATH_TO_BLOG_CATEGORY_LIMIT = 'mfhs/blogcategorylinks/maxnumberlinks';
-
-    /**
-     * @var Config
-     */
-    protected $config;
-
     /**
      * @var BlogFactory
      */
     protected $blogFactory;
+
+    /**
+     * @var string
+     */
+    protected $type = 'blogcategorylinks';
 
     /**
      * Category constructor.
@@ -41,17 +38,8 @@ abstract class AbstractCategories extends Template
         BlogFactory $blogFactory,
         array $data = []
     ) {
-        parent::__construct($context, $data);
-        $this->config = $config;
+        parent::__construct($context, $config, $data);
         $this->blogFactory = $blogFactory;
-    }
-
-    /**
-     * @return string
-     */
-    public function getBlockTitle()
-    {
-        return (string)$this->config->getConfig(self::XML_PATH_TO_BLOG_CATEGORY_TITLE);
     }
 
     public function getCollection()
@@ -88,11 +76,39 @@ abstract class AbstractCategories extends Template
     }
 
     /**
-     * @return int
+     * @return array|mixed|null
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    protected function getPageSize(): int
+    public function getItems()
     {
-        return 0;
+        $k = 'items';
+        if (null === $this->getData($k)) {
+            $items = [];
+
+            $collection = $this->getCollection();
+
+            foreach ($collection as $collectionItem) {
+                $item = new DataObject([
+                    'url' => $collectionItem->getUrl(),
+                    'name' => $collectionItem->getTitle(),
+                    'level' => $collectionItem->getLevel(),
+                    'object' => $collectionItem
+                ]);
+                $items[] = $item;
+            }
+
+            $this->setData($k, $items);
+        }
+
+        return $this->getData($k);
+    }
+
+    /**
+     * @return string
+     */
+    public function getCurrentTypeHtmlSitemapUrl()
+    {
+        return $this->getUrl('htmlsitemap/blog/categories');
     }
 
     /**
