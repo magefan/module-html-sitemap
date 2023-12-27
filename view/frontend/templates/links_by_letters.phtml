@@ -8,12 +8,12 @@
  * @var \Magefan\HtmlSitemap\Block\AbstractBlock $block
  */
 
-$linkCollection = $block->getItemsGroupedByLetter();
+$items = $block->getItemsGroupedByLetter();
 ?>
 
-<?php if (count($linkCollection)) {?>
+<?php if (count($items)) {?>
     <div class="sitemap-item-type sitemap-item-section">
-        <?php foreach ($linkCollection as $letter => $linkItems) { ?>
+        <?php foreach ($items as $letter => $linkItems) { ?>
             <div class="sitemap-item-section">
                 <p>
                     <strong><?= $block->escapeHtml($letter); ?></strong>

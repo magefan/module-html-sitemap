@@ -8,16 +8,16 @@
  * @var \Magefan\HtmlSitemap\Block\AbstractBlock $block
  */
 
-$links = $block->getItems();
+$items = $block->getItems();
 ?>
 
-<?php if (count($links)) { ?>
+<?php if (count($items)) { ?>
     <div class="sitemap-item-type sitemap-item-section">
         <?php if ($this->showBlockTitle() && $block->getBlockTitle()) { ?>
             <h2 class="sitemap-title"><?= $block->escapeHtml(__($block->getBlockTitle())) ?></h2>
         <?php } ?>
         <div class="sitemap-item-wrap">
-            <?php foreach ($links as $link): ?>
+            <?php foreach ($items as $link): ?>
                 <a class="sitemap-item" href="<?= $block->escapeUrl($link->getUrl()) ?>" title="<?= $block->escapeHtml($link->getName()) ?>">
                     <?= $block->escapeHtml($link->getName()) ?>
                 </a>
