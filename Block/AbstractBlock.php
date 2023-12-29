@@ -31,8 +31,7 @@ abstract class AbstractBlock extends Template
         Template\Context $context,
         Config $config,
         array $data = []
-    )
-    {
+    ) {
         parent::__construct($context, $data);
         $this->config = $config;
     }

@@ -29,7 +29,8 @@ class Recurring implements InstallSchemaInterface
         foreach (['magefan_blog_post', 'magefan_blog_category'] as $tableName) {
             $tableName = $setup->getTable($tableName);
 
-            if ($connection->isTableExists($tableName) == true && !$connection->tableColumnExists($tableName, 'mf_exclude_html_sitemap')) {
+            if ($connection->isTableExists($tableName) == true
+                && !$connection->tableColumnExists($tableName, 'mf_exclude_html_sitemap')) {
                 $columns = [
                     'mf_exclude_html_sitemap' => [
                         'type' => \Magento\Framework\DB\Ddl\Table::TYPE_SMALLINT,

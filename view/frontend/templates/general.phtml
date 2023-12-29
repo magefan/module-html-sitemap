@@ -2,11 +2,16 @@
 /**
  * Copyright © Magefan (support@magefan.com). All rights reserved.
  * Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+ *
+ * Glory to Ukraine! Glory to the heroes!
  */
+
+
+/** @var \Magento\Framework\Escaper $escaper */
 ?>
 
 <div class="sitemap-search">
-    <input id="html-sitemap-search" placeholder="<?= $block->escapeHtml(__('Search')) ?>" style="border-radius: 15px; padding: 15px;" type="text"/>
+    <input id="html-sitemap-search" placeholder="<?= $escaper->escapeHtml(__('Search')) ?>" style="border-radius: 15px; padding: 15px;" type="text"/>
 </div>
 
 <style>

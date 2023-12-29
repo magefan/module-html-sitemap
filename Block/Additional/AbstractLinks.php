@@ -48,7 +48,6 @@ abstract class AbstractLinks extends AbstractBlock
                     continue;
                 }
 
-
                 $collection[] = new DataObject([
                     'url' => $linkData[0],
                     'name' => isset($linkData[1]) ? $linkData[1] : $linkData[0]

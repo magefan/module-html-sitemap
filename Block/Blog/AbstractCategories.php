@@ -45,6 +45,10 @@ abstract class AbstractCategories extends AbstractBlock
         $this->blogFactory = $blogFactory;
     }
 
+    /**
+     * @return array|mixed|null
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     */
     public function getCollection()
     {
         $k = 'collection';

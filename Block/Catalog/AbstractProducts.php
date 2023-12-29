@@ -19,7 +19,6 @@ use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory;
 use Magento\Catalog\Model\Product\Attribute\Source\Status;
 use Magento\Catalog\Model\Product\Visibility;
 
-
 abstract class AbstractProducts extends AbstractBlock
 {
 
@@ -39,7 +38,7 @@ abstract class AbstractProducts extends AbstractBlock
     protected $visibility;
 
     /**
-     * @var
+     * @var array
      */
     protected $excludedProductsIds;
 
@@ -145,5 +144,4 @@ abstract class AbstractProducts extends AbstractBlock
 
         return $this->excludedProductsIds;
     }
-
 }

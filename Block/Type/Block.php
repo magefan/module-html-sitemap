@@ -13,6 +13,9 @@ namespace Magefan\HtmlSitemap\Block\Type;
 trait Block
 {
 
+    /**
+     * @return array
+     */
     public function getItemsGroupedByLetter()
     {
         $k = 'items_group_by_letter';
@@ -34,6 +37,7 @@ trait Block
         }
         return $this->getData($k);
     }
+
     /**
      * @return $this
      */
@@ -52,7 +56,7 @@ trait Block
         $title = $this->getBlockTitle();
 
         if ($title) {
-            $this->pageConfig->getTitle()->set( __('Sitemap') . ' - ' .  $this->getBlockTitle());
+            $this->pageConfig->getTitle()->set(__('Sitemap') . ' - ' .  $this->getBlockTitle());
         }
 
         return $this;

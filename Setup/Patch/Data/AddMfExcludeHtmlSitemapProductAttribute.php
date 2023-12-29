@@ -111,4 +111,3 @@ class AddMfExcludeHtmlSitemapProductAttribute implements DataPatchInterface, Pat
         ];
     }
 }
-

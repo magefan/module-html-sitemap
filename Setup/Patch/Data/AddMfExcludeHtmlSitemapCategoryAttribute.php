@@ -99,4 +99,3 @@ class AddMfExcludeHtmlSitemapCategoryAttribute implements DataPatchInterface, Pa
         ];
     }
 }
-

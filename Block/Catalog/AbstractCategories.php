@@ -90,7 +90,6 @@ abstract class AbstractCategories extends AbstractBlock
                 ->addIsActiveFilter()
                 ->addFieldToFilter('path', ['like' => '%/' . $parent . '/%']);
 
-
             $categories->setOrder('position', 'ASC');
 
             $ignoredLinks = $this->config->getIgnoredLinks();
@@ -150,6 +149,7 @@ abstract class AbstractCategories extends AbstractBlock
 
     /**
      * Retrieve tree ordered categories
+     * @param $categories
      * @return array
      */
     public function getCategoryTree($categories)
@@ -163,6 +163,7 @@ abstract class AbstractCategories extends AbstractBlock
 
     /**
      * Retrieve gruped category childs
+     * @param $categories
      * @return array
      */
     public function getGroupedChilds($categories)
@@ -178,7 +179,10 @@ abstract class AbstractCategories extends AbstractBlock
 
     /**
      * Auxiliary function to build tree ordered array
-     * @return array
+     * @param $categories
+     * @param $itemId
+     * @param $childs
+     * @param $tree
      */
     protected function _toTree($categories, $itemId, $childs, &$tree)
     {
@@ -192,7 +196,6 @@ abstract class AbstractCategories extends AbstractBlock
             }
         }
     }
-
 
     /**
      * @return int

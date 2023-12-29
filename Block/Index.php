@@ -44,6 +44,7 @@ class Index extends Text
      * @param \Magento\Framework\View\Element\Context $context
      * @param Config $config
      * @param StoreManagerInterface $storeManager
+     * @param PageConfig $pageConfig
      * @param array $data
      */
     public function __construct(
@@ -154,7 +155,6 @@ class Index extends Text
                     'title' => __('Sitemap'),
                 ]
             );
-
 
         }
 

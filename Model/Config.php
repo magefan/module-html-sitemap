@@ -61,8 +61,7 @@ class Config
      */
     public function __construct(
         ScopeConfigInterface $scopeConfig
-    )
-    {
+    ) {
         $this->scopeConfig = $scopeConfig;
     }
 
@@ -81,7 +80,7 @@ class Config
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @param null $storeId
      * @return int
      */

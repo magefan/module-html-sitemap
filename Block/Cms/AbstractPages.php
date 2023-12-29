@@ -19,13 +19,6 @@ use Magento\Cms\Model\ResourceModel\Page\CollectionFactory as PageCollectionFact
 
 abstract class AbstractPages extends AbstractBlock
 {
-    const XML_PATH_TO_CMS_PAGE_BLOCK_TITLE = 'mfhs/cmspagelinks/title';
-    const XML_PATH_TO_CMS_PAGE_LIMIT = 'mfhs/cmspagelinks/maxnumberlinks';
-    const XML_PATH_TO_CMS_PAGE_VIEW_MORE = 'mfhs/cmspagelinks/displaymore';
-    const XML_PATH_TO_PAGE_TITLE = 'mfhs/seo/title';
-    const XML_PATH_TO_PAGE_META_TITLE = 'mfhs/seo/metatitle';
-    const XML_PATH_TO_PAGE_META_DESCRIPTION = 'mfhs/seo/metadescription';
-    const XML_PATH_TO_PAGE_META_KEYWORDS = 'mfhs/seo/metakeywords';
 
     /**
      * @var PageCollectionFactory
@@ -78,6 +71,10 @@ abstract class AbstractPages extends AbstractBlock
         return $this->getData($k);
     }
 
+    /**
+     * @return array|mixed|null
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     */
     public function getItems()
     {
         $k = 'items';

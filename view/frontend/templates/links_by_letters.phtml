@@ -2,10 +2,13 @@
 /**
  * Copyright © Magefan (support@magefan.com). All rights reserved.
  * Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+ *
+ * Glory to Ukraine! Glory to the heroes!
  */
 
 /**
  * @var \Magefan\HtmlSitemap\Block\AbstractBlock $block
+ * @var \Magento\Framework\Escaper $escaper
  */
 
 $items = $block->getItemsGroupedByLetter();
@@ -16,13 +19,13 @@ $items = $block->getItemsGroupedByLetter();
         <?php foreach ($items as $letter => $linkItems) { ?>
             <div class="sitemap-item-section">
                 <p>
-                    <strong><?= $block->escapeHtml($letter); ?></strong>
+                    <strong><?= $escaper->escapeHtml($letter); ?></strong>
                 </p>
 
                 <div class="sitemap-item-wrap">
                     <?php if ($linkItems) { ?>
                         <?php foreach ($linkItems as $linkItem): ?>
-                            <a href="<?= $block->escapeUrl($linkItem->getUrl()) ?>" title="<?= $block->escapeHtml($linkItem->getName()) ?>"><?= $block->escapeHtml($linkItem->getName()) ?></a>
+                            <a href="<?= $escaper->escapeUrl($linkItem->getUrl()) ?>" title="<?= $escaper->escapeHtml($linkItem->getName()) ?>"><?= $escaper->escapeHtml($linkItem->getName()) ?></a>
                         <?php endforeach; ?>
                     <?php } ?>
                 </div>

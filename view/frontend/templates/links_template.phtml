@@ -2,10 +2,13 @@
 /**
  * Copyright © Magefan (support@magefan.com). All rights reserved.
  * Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+ *
+ * Glory to Ukraine! Glory to the heroes!
  */
 
 /**
  * @var \Magefan\HtmlSitemap\Block\AbstractBlock $block
+ * @var \Magento\Framework\Escaper $escaper
  */
 
 $items = $block->getItems();
@@ -13,19 +16,19 @@ $items = $block->getItems();
 
 <?php if (count($items)) { ?>
     <div class="sitemap-item-type sitemap-item-section">
-        <?php if ($this->showBlockTitle() && $block->getBlockTitle()) { ?>
-            <h2 class="sitemap-title"><?= $block->escapeHtml(__($block->getBlockTitle())) ?></h2>
+        <?php if ($block->showBlockTitle() && $block->getBlockTitle()) { ?>
+            <h2 class="sitemap-title"><?= $escaper->escapeHtml(__($block->getBlockTitle())) ?></h2>
         <?php } ?>
         <div class="sitemap-item-wrap">
             <?php foreach ($items as $link): ?>
-                <a class="sitemap-item" href="<?= $block->escapeUrl($link->getUrl()) ?>" title="<?= $block->escapeHtml($link->getName()) ?>">
-                    <?= $block->escapeHtml($link->getName()) ?>
+                <a class="sitemap-item" href="<?= $escaper->escapeUrl($link->getUrl()) ?>" title="<?= $escaper->escapeHtml($link->getName()) ?>">
+                    <?= $escaper->escapeHtml($link->getName()) ?>
                 </a>
             <?php endforeach; ?>
         </div>
         <?php if ($block->showViewMore()): ?>
-            <a class="view-more" href="<?= $block->escapeUrl($block->getCurrentTypeHtmlSitemapUrl())?>" >
-                <?= $block->escapeHtml(__('View more'))?>
+            <a class="view-more" href="<?= $escaper->escapeUrl($block->getCurrentTypeHtmlSitemapUrl())?>" >
+                <?= $escaper->escapeHtml(__('View more'))?>
             </a>
         <?php endif; ?>
     </div>
