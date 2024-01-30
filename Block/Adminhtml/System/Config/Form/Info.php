@@ -14,7 +14,7 @@ class Info extends \Magefan\Community\Block\Adminhtml\System\Config\Form\Info
      */
     protected function getModuleUrl()
     {
-        return 'https://mage' . 'fan.com/magento-2-html-sitemap-extension?utm_source=m2admin_html_sitemap_config&utm_medium=link&utm_campaign=regular';
+        return 'https://mage' . 'fan.com/magento-2-html-sitemap-extension';
     }
     /**
      * Return extension title
