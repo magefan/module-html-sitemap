@@ -11,8 +11,10 @@ use Magento\Framework\View\Element\Template;
 use Magefan\HtmlSitemap\Model\Config;
 use Magento\Catalog\Model\ResourceModel\Category\CollectionFactory;
 use Magento\Catalog\Model\CategoryFactory;
+use Magento\Framework\UrlInterface;
+use Magefan\HtmlSitemap\Block\AbstractSitemap;
 
-class Category extends Template
+class Category extends AbstractSitemap
 {
     const XML_PATH_TO_CATALOG_CATEGORY_BLOCK_TITLE = 'mfhs/categorylinks/title';
     const XML_PATH_TO_CATALOG_CATEGORY_DEPTH = 'mfhs/categorylinks/maxdepth';
@@ -50,7 +52,9 @@ class Category extends Template
     private $excludedCategoriesIds = [];
 
     /**
+     * Category constructor.
      * @param Template\Context $context
+     * @param UrlInterface $url
      * @param Config $config
      * @param CollectionFactory $collectionFactory
      * @param CategoryFactory $categoryFactory
@@ -58,12 +62,13 @@ class Category extends Template
      */
     public function __construct(
         Template\Context $context,
+        UrlInterface $url,
         Config $config,
         CollectionFactory $collectionFactory,
         CategoryFactory $categoryFactory,
         array $data = []
     ) {
-        parent::__construct($context, $data);
+        parent::__construct($context, $url, $data);
         $this->config = $config;
         $this->collectionFactory = $collectionFactory;
         $this->categoryFactory = $categoryFactory;
@@ -233,19 +238,4 @@ class Category extends Template
         return $this->excludedCategoriesIds;
     }
 
-    /**
-     * @return $this|Category
-     */
-    protected function _prepareLayout()
-    {
-        parent::_prepareLayout();
-
-        $title = $this->getBlockTitle();
-
-        if ($title) {
-            $this->pageConfig->getTitle()->set( __('Sitemap') . ' - ' .  $this->getBlockTitle());
-        }
-
-        return $this;
-    }
 }

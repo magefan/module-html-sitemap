@@ -7,9 +7,26 @@
 namespace Magefan\HtmlSitemap\Block;
 
 use Magento\Framework\View\Element\Text;
+use Magento\Framework\UrlInterface;
+use Magento\Framework\View\Page\Config;
 
 class Sitemap extends Text
 {
+    protected $url;
+
+    protected $pageConfig;
+
+    public function __construct(
+        \Magento\Framework\View\Element\Context $context,
+        UrlInterface $url,
+        Config $pageConfig,
+        array $data = []
+    ) {
+        parent::__construct($context, $data);
+        $this->url = $url;
+        $this->pageConfig = $pageConfig;
+    }
+
     /**
      * @return string
      * @throws \Magento\Framework\Exception\LocalizedException
@@ -46,5 +63,22 @@ class Sitemap extends Text
         }
 
         return 0;
+    }
+
+    protected function _prepareLayout()
+    {
+        $canonicalUrl = $this->url->getCurrentUrl();
+        $page = (int)$this->_request->getParam($this->getPageParamName());
+        if ($page > 1) {
+            $canonicalUrl .= ((false === strpos($canonicalUrl, '?')) ? '?' : '&')
+                . 'p=' . $page;
+        }
+
+        $this->pageConfig->addRemotePageAsset(
+            $canonicalUrl,
+            'canonical',
+            ['attributes' => ['rel' => 'canonical']]
+        );
+        return parent::_prepareLayout();
     }
 }
