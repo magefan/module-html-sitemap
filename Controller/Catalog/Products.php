@@ -8,11 +8,11 @@
 
 declare(strict_types=1);
 
-namespace Magefan\HtmlSitemap\Controller\Index;
+namespace Magefan\HtmlSitemap\Controller\Catalog;
 
 use Magento\Framework\Controller\ResultFactory;
 
-class Index extends \Magento\Framework\App\Action\Action
+class Products extends \Magento\Framework\App\Action\Action
 {
 
     /**

@@ -9,7 +9,7 @@
 	<body>
 		<referenceContainer name="content">
             <block name="html-sitemap-general" template="Magefan_HtmlSitemap::general.phtml"/>
-			<block as="additional_additional" class="Magefan\HtmlSitemap\Block\Additional\Links" name="additional.links" template="Magefan_HtmlSitemap::links_template.phtml"/>
+			<block as="catalog_category" class="Magefan\HtmlSitemap\Block\Catalog\Categories" name="catalog.category" template="Magefan_HtmlSitemap::category_tree.phtml"/>
 		</referenceContainer>
 	</body>
 </page>

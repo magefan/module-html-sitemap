@@ -9,7 +9,7 @@
 	<body>
 		<referenceContainer name="content">
             <block name="html-sitemap-general" template="Magefan_HtmlSitemap::general.phtml"/>
-			<block as="additional_additional" class="Magefan\HtmlSitemap\Block\Additional\Links" name="additional.links" template="Magefan_HtmlSitemap::links_template.phtml"/>
+			<block class="Magefan\HtmlSitemap\Block\Blog\Posts" ifconfig="mfblog/general/enabled" name="blog.post" template="Magefan_HtmlSitemap::links_by_letters.phtml"/>
 		</referenceContainer>
 	</body>
 </page>
