@@ -12,7 +12,7 @@
 [Magento 2 HTML Sitemap Extension Free](https://magefan.com/magento-2-html-sitemap-extension) is a solution that helps you to generate a unique HTML sitemap for your store and gather all of your store pages links in one place. It improves website navigation and makes indexing faster and easier.
 
 
-<a href="https://magefan.com/magento-2-html-sitemap-extension"><img width="190" height="70" src="https://cm.magefan.com/wysiwyg/products/download-magefan-extensions.png"></a><a href="https://magefan.com/magento-2-html-sitemap-extension#live-demo"><img width="190" height="70" src="https://cm.magefan.com/wysiwyg/products/magefan-live-demo.png"></a>
+<a href="https://magefan.com/magento-2-html-sitemap-extension"><img width="190" height="70" src="https://cm.magefan.com/wysiwyg/products/download-magefan-extensions.png"></a><a href="https://magefan.com/magento-2-html-sitemap-extension#live-demo"><img width="190" height="70" src="https://cm.magefan.com/wysiwyg/products/magefan-live-demo.png"></a><a href="https://magefan.com/magento-2-seo-extension"><img width="190" height="70" src="https://cm.magefan.com/wysiwyg/products/magefan-seo.png"></a>
 
 ## Benefits
 
