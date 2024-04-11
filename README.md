@@ -11,8 +11,12 @@
 
 [Magento 2 HTML Sitemap Extension Free](https://magefan.com/magento-2-html-sitemap-extension) is a solution that helps you to generate a unique HTML sitemap for your store and gather all of your store pages links in one place. It improves website navigation and makes indexing faster and easier.
 
-
 <a href="https://magefan.com/magento-2-html-sitemap-extension"><img width="190" height="70" src="https://cm.magefan.com/wysiwyg/products/download-magefan-extensions.png"></a><a href="https://magefan.com/magento-2-html-sitemap-extension#live-demo"><img width="190" height="70" src="https://cm.magefan.com/wysiwyg/products/magefan-live-demo.png"></a><a href="https://magefan.com/magento-2-seo-extension"><img width="190" height="70" src="https://cm.magefan.com/wysiwyg/products/magefan-seo.png"></a>
+
+## Requirements
+  * Magento Community 2.3.0-2.4.x (CE, EE, ECE, B2B)
+  * [Magefan Community Extension](https://github.com/magefan/module-community) >= v2.1.20. Please install this extension first if you use installation via FTP.
+  * **Note** that the extension is free only for the Magento Community (Open Source) Edition. For Magento EE, ECE, and B2B you need to purchase the license  at magefan.com.
 
 ## Benefits
 
