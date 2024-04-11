@@ -26,7 +26,7 @@
 If customers don’t find what they’re looking for they leave your website with no promise of coming back. This proves that search and website navigation is important for your business and customer satisfaction. Magento 2 HTML Sitemap extension allows you to generate a unique HTM sitemap page with all of the links to different store pages: products, categories, CMS pages or any other pages on your store.  It not only improves navigation for customers but makes it easier for search crawlers to understand the structure of your store.
 
 <p align="center">
-  <img width="860" height="428" src="https://cm.magefan.com/mf_webp/png/media/catalog/magento-seo-potential.webp">
+  <img width="860" height="428" src="https://cm.magefan.com/mf_webp/png/media/catalog/magento-seo-sitemap_1.webp">
 </p>
 
 ### Exclude Pages from HTML Sitemap
@@ -34,7 +34,7 @@ If customers don’t find what they’re looking for they leave your website wit
 Not all pages of your store are equally “popular” or visited. Some are not predetermined to be visited. To hide those pages from sitemap, HTML Sitemap Extension for Magento offers you the “Exclude” or “Hide” options. You just need to enter the links of the pages you don’t want to add to the sitemap and people won’t be able to navigate them from the HTML Sitemap storefront page.
 
 <p align="center">
-  <img width="860" height="428" src="https://cm.magefan.com/mf_webp/png/media/catalog/exclude-pages-from-html-sitemap.webp">
+  <img width="860" height="428" src="https://cm.magefan.com/mf_webp/png/media/catalog/exclude-pages-from-html-sitemap_1.webp">
 </p>
 
 ### HTML Sitemap Block Sorting Order
@@ -42,7 +42,7 @@ Not all pages of your store are equally “popular” or visited. Some are not p
 To define more important pages (so they can be indexed and crawled faster), you can set the sort order for the page blocks. With the Magento 2 HTML Sitemap Extension, you can set product or category pages to be displayed at the top of the HTML Sitemap, and the other of them lower down the page correspondingly. It is up to you to specify what is more important to your customers.
 
 <p align="center">
-  <img width="860" height="428" src="https://cm.magefan.com/mf_webp/png/media/catalog/html-sitemap-blocks-sort-order.webp">
+  <img width="860" height="428" src="https://cm.magefan.com/mf_webp/png/media/catalog/html-sitemap-blocks-sort-order_1.webp">
 </p>
 
 ### Sitemap Search Engine Optimization
@@ -50,7 +50,7 @@ To define more important pages (so they can be indexed and crawled faster), you 
 Since the HTML Sitemap page is displayed on the storefront as any other page of your store, it needs a meta title and description. It helps your store visitors, customers, and search engines better understand what the page is about.
 
 <p align="center">
-  <img width="860" height="428" src="https://cm.magefan.com/mf_webp/png/media/catalog/html-sitemap-page-metadata.webp">
+  <img width="860" height="428" src="https://cm.magefan.com/mf_webp/png/media/catalog/html-sitemap-page-metadata_1.webp">
 </p>
 
 ## Demo
@@ -100,6 +100,11 @@ Try out our open demo and if you like our extension **please give us some star o
     </tr>
   </tbody>
 </table>
+
+## Support
+If you have any issues, please [contact us](mailto:support@magefan.com)
+then if you still need help, open a bug report in GitHub's
+[issue tracker](https://github.com/magefan/module-html-sitemap/issues).
 
 ## Need More Features?
 Please contact us to get a quote
@@ -156,6 +161,7 @@ The code is licensed under [EULA](https://magefan.com/end-user-license-agreement
 
 ### [Magento 2 Marketing Automation Extensions](https://magefan.com/magento-2-extensions/magento-marketing-automation)
 
+* [Magento 2 Product Labels Extension](https://magefan.com/magento-2-product-labels)
 * [Magento 2 Dynamic Categories](https://magefan.com/magento-2-dynamic-categories)
 * [Magento 2 CMS Display Rules Extension](https://magefan.com/magento-2-cms-display-rules-extension)
 * [Magento 2 Automatic Related Products](https://magefan.com/magento-2-automatic-related-products)
