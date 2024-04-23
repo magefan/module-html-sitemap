@@ -9,7 +9,6 @@ declare(strict_types=1);
 namespace Magefan\HtmlSitemap\Setup\Patch\Data;
 
 use Magento\Cms\Model\ResourceModel\Page\CollectionFactory as PageCollectionFactory;
-use Magento\Eav\Setup\EavSetupFactory;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
 use Magento\Framework\Setup\Patch\DataPatchInterface;
 use Magento\Framework\Setup\Patch\PatchRevertableInterface;
@@ -23,28 +22,20 @@ class PageToExclude implements DataPatchInterface, PatchRevertableInterface
     private $moduleDataSetup;
 
     /**
-     * @var EavSetupFactory
-     */
-    private $eavSetupFactory;
-
-    /**
      * @var PageCollectionFactory
      */
     private $pageCollectionFactory;
 
     /**
      * @param ModuleDataSetupInterface $moduleDataSetup
-     * @param EavSetupFactory $eavSetupFactory
      * @param PageCollectionFactory $pageCollectionFactory
      */
     public function __construct(
         ModuleDataSetupInterface $moduleDataSetup,
-        EavSetupFactory          $eavSetupFactory,
         PageCollectionFactory   $pageCollectionFactory
     )
     {
         $this->moduleDataSetup = $moduleDataSetup;
-        $this->eavSetupFactory = $eavSetupFactory;
         $this->pageCollectionFactory = $pageCollectionFactory;
     }
 
