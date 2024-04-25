@@ -9,7 +9,7 @@
     <default>
         <mfhs>
             <general>
-                <enabled>1</enabled>
+                <enabled>0</enabled>
                 <mfmodule>HtmlSitemap</mfmodule>
                 <mftype>1</mftype>
                 <displayin>2</displayin>
