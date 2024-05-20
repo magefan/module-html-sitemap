@@ -11,7 +11,7 @@
     ],
     "version": "2.2.0",
     "require": {
-        "magefan/module-community" : ">=2.1.17"
+        "magefan/module-community" : ">=2.1.21"
     },
     "autoload": {
         "files": [
