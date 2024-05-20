@@ -1,0 +1,35 @@
+<?php
+/**
+ * Copyright © Magefan (support@magefan.com). All rights reserved.
+ * Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+ *
+ * Glory to Ukraine! Glory to the heroes!
+ */
+
+/**
+ * @var \Magefan\HtmlSitemap\Block\AbstractBlock $block
+ * @var \Magento\Framework\Escaper $escaper
+ */
+
+$items = $block->getItemsGroupedByLetter();
+?>
+
+<?php if (count($items)) {?>
+    <div class="sitemap-item-type sitemap-item-section">
+        <?php foreach ($items as $letter => $linkItems) { ?>
+            <div class="sitemap-item-section">
+                <p>
+                    <strong><?= $escaper->escapeHtml($letter); ?></strong>
+                </p>
+
+                <div class="sitemap-item-wrap">
+                    <?php if ($linkItems) { ?>
+                        <?php foreach ($linkItems as $linkItem): ?>
+                            <a href="<?= $escaper->escapeUrl($linkItem->getUrl()) ?>" title="<?= $escaper->escapeHtml($linkItem->getName()) ?>"><?= $escaper->escapeHtml($linkItem->getName()) ?></a>
+                        <?php endforeach; ?>
+                    <?php } ?>
+                </div>
+            </div>
+        <?php } ?>
+    </div>
+<?php } ?>

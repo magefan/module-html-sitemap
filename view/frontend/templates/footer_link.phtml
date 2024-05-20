@@ -2,10 +2,13 @@
 /**
  * Copyright © Magefan (support@magefan.com). All rights reserved.
  * Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+ *
+ * Glory to Ukraine! Glory to the heroes!
  */
 
 /**
- * @var $block \Magefan\HtmlSitemap\Block\Link
+ * @var \Magefan\HtmlSitemap\Block\Link $block
+ * @var \Magento\Framework\Escaper $escaper
  */
 ?>
 
@@ -18,9 +21,9 @@ $openLinks = ($block->getOpenLinks() == 1) ? '' : 'target="_blank"';
 <?php if ($config->isEnabled()): ?>
     <?php if (in_array('2', $displayInArray)): ?>
     <li>
-        <a href="<?= $block->escapeUrl($block->getHref()) ?>"
+        <a href="<?= $escaper->escapeUrl($block->getHref()) ?>"
            name="footer_htmlsitemap_link" <?= $openLinks ?>>
-            <?= $block->escapeHtml($block->getLabel()) ?>
+            <?= $escaper->escapeHtml($block->getLabel()) ?>
         </a>
     </li>
     <?php endif ?>
