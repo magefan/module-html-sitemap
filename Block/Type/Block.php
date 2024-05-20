@@ -90,8 +90,8 @@ trait Block
             $breadcrumbsBlock->addCrumb(
                 'htmlsitemap_' . $this->type,
                 [
-                    'label' => __(ucfirst($this->type)),
-                    'title' => __(ucfirst($this->type)),
+                    'label' => __(ucfirst($this->getBlockTitle())),
+                    'title' => __(ucfirst($this->getBlockTitle())),
                 ]
             );
 

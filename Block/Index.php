@@ -70,6 +70,12 @@ class Index extends Text
 
         $this->addBreadcrumbs();
 
+        $this->pageConfig->addRemotePageAsset(
+            $this->getUrl('htmlsitemap'),
+            'canonical',
+            ['attributes' => ['rel' => 'canonical']]
+        );
+
         $title = $this->config->getConfig(self::XML_PATH_TO_PAGE_TITLE) ?: '';
         $metaTitle = $this->config->getConfig(self::XML_PATH_TO_PAGE_META_TITLE) ?: '';
         $metaDescription = $this->config->getConfig(self::XML_PATH_TO_PAGE_META_DESCRIPTION) ?: '';
