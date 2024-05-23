@@ -40,21 +40,19 @@ class PageToExclude implements DataPatchInterface, PatchRevertableInterface
     }
 
     /**
-     * @return void
+     * {@inheritdoc}
      */
     public function apply()
     {
         $this->moduleDataSetup->getConnection()->startSetup();
 
         $pageCollection = $this->pageCollectionFactory->create();
-
-        $pageCollection->addFieldToFilter('identifier', ['in' => ['no-route', 'home', 'enable-cookies']]);
-
-        foreach ($pageCollection as $page) {
-            $page->setMfExcludeHtmlSitemap(1);
-        }
-
-        $pageCollection->save();
+        $connection = $pageCollection->getConnection();
+        $connection->update(
+            $pageCollection->getTable('cms_page'),
+            ['mf_exclude_html_sitemap' => 1],
+            ['identifier IN (?)' => ['no-route', 'home', 'enable-cookies']]
+        );
 
         $this->moduleDataSetup->getConnection()->endSetup();
     }
