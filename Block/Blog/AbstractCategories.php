@@ -96,7 +96,7 @@ abstract class AbstractCategories extends AbstractBlock
 
             foreach ($collection as $collectionItem) {
                 $item = new DataObject([
-                    'url' => $collectionItem->getUrl(),
+                    'url' => $collectionItem->getCategoryUrl(),
                     'name' => $collectionItem->getTitle(),
                     'level' => $collectionItem->getLevel(),
                     'object' => $collectionItem
