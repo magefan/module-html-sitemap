@@ -7,9 +7,11 @@
  */
 
 
-/** @var \Magento\Framework\Escaper $escaper */
+/**
+ * @var \Magento\Framework\Escaper $escaper
+ * @var $mfSecureRenderer \Magefan\Community\Api\SecureHtmlRendererInterface
+ */
 ?>
-
 <div class="sitemap-search">
     <input id="html-sitemap-search" placeholder="<?= $escaper->escapeHtml(__('Search')) ?>" style="border-radius: 15px; padding: 15px;" type="text"/>
 </div>
@@ -57,9 +59,7 @@
     [class*="htmlsitemap-"] .sitemap-item-type .sitemap-item-section .sitemap-item-wrap {padding-left: 40px;}
 
 </style>
-
-
-<script>
+<?php $script = "
     require(['jquery'], function($) {
 
         var searchQuery = '';
@@ -94,7 +94,7 @@
                         } else {
                             $(el).show();
                             noResults = false;
-                            highlightResult($(el).get(0), searchQuery, "highlight-result");
+                            highlightResult($(el).get(0), searchQuery, 'highlight-result');
                         }
                     } else {
                         $(el).show();
@@ -136,4 +136,6 @@
             }
         };
     });
-</script>
+";?>
+
+<?= /* @noEscape */ $mfSecureRenderer->renderTag('script', [], $script, false) ?>
