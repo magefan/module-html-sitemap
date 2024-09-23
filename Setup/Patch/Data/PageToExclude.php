@@ -33,8 +33,7 @@ class PageToExclude implements DataPatchInterface, PatchRevertableInterface
     public function __construct(
         ModuleDataSetupInterface $moduleDataSetup,
         PageCollectionFactory   $pageCollectionFactory
-    )
-    {
+    ) {
         $this->moduleDataSetup = $moduleDataSetup;
         $this->pageCollectionFactory = $pageCollectionFactory;
     }
@@ -80,4 +79,3 @@ class PageToExclude implements DataPatchInterface, PatchRevertableInterface
         return [];
     }
 }
-
