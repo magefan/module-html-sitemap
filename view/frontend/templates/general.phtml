@@ -12,9 +12,6 @@
  * @var $mfSecureRenderer \Magefan\Community\Api\SecureHtmlRendererInterface
  */
 ?>
-
-<?php $script = ''; ?>
-
 <div class="sitemap-search">
     <input id="html-sitemap-search" placeholder="<?= $escaper->escapeHtml(__('Search')) ?>" style="border-radius: 15px; padding: 15px;" type="text"/>
 </div>
@@ -62,7 +59,7 @@
     [class*="htmlsitemap-"] .sitemap-item-type .sitemap-item-section .sitemap-item-wrap {padding-left: 40px;}
 
 </style>
-<?php $script .= "
+<?php $script = "
     require(['jquery'], function($) {
 
         var searchQuery = '';
