@@ -28,7 +28,7 @@
 
     .htmlsitemap-index-index .sitemap-item-type {margin-bottom: 40px;}
     .htmlsitemap-index-index .sitemap-item-type > h2 {margin: 0 0 20px;}
-    .htmlsitemap-index-index .sitemap-item-type .highlight-result {color: red;}
+    [class*="htmlsitemap-"] .highlight-result {color: red;}
 
     /* Category */
     [class*="htmlsitemap-"] .widget.block-categories .accordion {margin-bottom: 20px;}
@@ -60,64 +60,69 @@
 
 </style>
 <?php $script = "
-    require(['jquery'], function($) {
-
+    document.addEventListener('DOMContentLoaded', function() {
         var searchQuery = '';
 
         initSearch();
 
         function initSearch() {
-            $('#html-sitemap-search').keyup(function(el) {
-                var val = el.target.value;
+            var searchInput = document.getElementById('html-sitemap-search');
 
-                if (searchQuery != val.toLocaleLowerCase()) {
+            // Handle keyup event on the search input
+            searchInput.addEventListener('keyup', function(event) {
+                var val = event.target.value;
+
+                if (searchQuery !== val.toLocaleLowerCase()) {
                     findItems(val);
                 }
             });
 
-            $('.sitemap-item-section a').each(function (key, el) {
+            // Store original content for each link
+            var links = document.querySelectorAll('.sitemap-item-section a');
+            links.forEach(function(el) {
                 el.originalTextContent = el.innerText ? el.innerHTML : el.textContent;
             });
         }
 
         function findItems(query) {
-            searchQuery = query.replace(/^\s+/, '').replace(/\s+$/, '').toLowerCase();
+            searchQuery = query.trim().toLowerCase();
 
-            $('.sitemap-item-section').each(function(key, el) {
+            var sections = document.querySelectorAll('.sitemap-item-section');
+            sections.forEach(function(section) {
                 var noResults = true;
 
-                $(this).find('a').each(function(key, el) {
+                var links = section.querySelectorAll('a');
+                links.forEach(function(el) {
                     el.textContent = el.originalTextContent.replace(/&amp;/g, '&');
-                    if (searchQuery.replace(/\s+/, '') != '') {
-                        if (el.originalTextContent.toLowerCase().indexOf(searchQuery) == -1) {
-                            $(el).hide();
+
+                    if (searchQuery !== '') {
+                        if (el.originalTextContent.toLowerCase().indexOf(searchQuery) === -1) {
+                            el.style.display = 'none';
                         } else {
-                            $(el).show();
+                            el.style.display = '';
                             noResults = false;
-                            highlightResult($(el).get(0), searchQuery, 'highlight-result');
+                            highlightResult(el, searchQuery, 'highlight-result');
                         }
                     } else {
-                        $(el).show();
+                        el.style.display = '';
                         noResults = false;
                     }
                 });
 
-                if (noResults) {
-                    $(this).hide();
-                } else  {
-                    $(this).show();
-                }
+                section.style.display = noResults ? 'none' : '';
             });
         }
 
         function highlightResult(element, term, className) {
+
             className = className || 'highlight';
             term = (term || '').toUpperCase();
-            if (term.replace(/\s+/, '') == '') {
-                return false
+
+            if ('' === term) {
+                return false;
             }
 
-            if (element.nodeType == Node.TEXT_NODE) {
+            if (element.nodeType === Node.TEXT_NODE) {
                 var pos = element.data.toUpperCase().indexOf(term);
                 if (pos >= 0) {
                     var searchResult = element.splitText(pos),
@@ -127,9 +132,8 @@
                     spanWrapper.className = className;
                     spanWrapper.appendChild(searchResult.cloneNode(true));
                     searchResult.parentNode.replaceChild(spanWrapper, searchResult);
-
                 }
-            } else if (element.nodeType == Node.ELEMENT_NODE && element.childNodes && !/(script|style)/i.test(element.tagName)) {
+            } else if (element.nodeType === Node.ELEMENT_NODE && element.childNodes && !/(script|style)/i.test(element.tagName)) {
                 for (var i = 0; i < element.childNodes.length; ++i) {
                     i += highlightResult(element.childNodes[i], term, className);
                 }
@@ -137,5 +141,4 @@
         };
     });
 ";?>
-
 <?= /* @noEscape */ $mfSecureRenderer->renderTag('script', [], $script, false) ?>
