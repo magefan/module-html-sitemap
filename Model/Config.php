@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace Magefan\HtmlSitemap\Model;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\Module\ModuleListInterface;
 use Magento\Store\Model\ScopeInterface;
 
 class Config
@@ -56,13 +57,21 @@ class Config
     private $ignoredLinks;
 
     /**
-     * Config constructor.
+     * @var ModuleListInterface
+     */
+    private $moduleList;
+
+    /**
      * @param ScopeConfigInterface $scopeConfig
+     * @param ModuleListInterface|null $moduleList
      */
     public function __construct(
-        ScopeConfigInterface $scopeConfig
+        ScopeConfigInterface $scopeConfig,
+        ModuleListInterface $moduleList = null
     ) {
         $this->scopeConfig = $scopeConfig;
+        $this->moduleList = $moduleList ?: \Magento\Framework\App\ObjectManager::getInstance()
+            ->get(ModuleListInterface::class);
     }
 
     /**
@@ -131,7 +140,8 @@ class Config
      */
     public function isBlogEnabled($storeId = null)
     {
-        return (bool)$this->getConfig(self::XML_PATH_BLOG_EXTENSION_ENABLED, $storeId);
+        return $this->getConfig(self::XML_PATH_BLOG_EXTENSION_ENABLED, $storeId)
+            && $this->moduleList->getOne('Magefan_Blog');
     }
 
     /**
