@@ -2,27 +2,41 @@
 /**
  * Copyright © Magefan (support@magefan.com). All rights reserved.
  * Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
- *
- * Glory to Ukraine! Glory to the heroes!
  */
 
 declare(strict_types=1);
 
-namespace Magefan\HtmlSitemap\Setup;
+namespace Magefan\HtmlSitemap\Setup\Patch\Schema;
 
-use Magento\Framework\Setup\InstallSchemaInterface;
-use Magento\Framework\Setup\ModuleContextInterface;
+use Magento\Framework\Setup\ModuleDataSetupInterface;
 use Magento\Framework\Setup\SchemaSetupInterface;
+use Magento\Framework\Setup\Patch\SchemaPatchInterface;
+use Magento\Framework\Setup\Patch\PatchRevertableInterface;
 
-class Recurring implements InstallSchemaInterface
+class Recurring implements SchemaPatchInterface, PatchRevertableInterface
 {
+
+    /**
+     * @var SchemaSetupInterface
+     */
+    private $schemaSetup;
+
+    /**
+     * Constructor.
+     *
+     * @param SchemaSetupInterface $schemaSetup
+     */
+    public function __construct(SchemaSetupInterface $schemaSetup)
+    {
+        $this->schemaSetup = $schemaSetup;
+    }
+
     /**
      * {@inheritdoc}
-     * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
      */
-    public function install(SchemaSetupInterface $setup, ModuleContextInterface $context)
+    public function apply()
     {
-        $installer = $setup;
+        $setup = $this->schemaSetup;
         $setup->startSetup();
         $connection = $setup->getConnection();
 
@@ -47,5 +61,28 @@ class Recurring implements InstallSchemaInterface
         }
 
         $setup->endSetup();
+    }
+
+    /**
+     * Revert function
+     */
+    public function revert()
+    {
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getAliases()
+    {
+        return [];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getDependencies()
+    {
+        return [];
     }
 }
