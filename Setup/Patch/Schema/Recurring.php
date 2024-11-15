@@ -6,27 +6,29 @@
 
 declare(strict_types=1);
 
-namespace Magefan\HtmlSitemap\Setup\Patch\Data;
+namespace Magefan\HtmlSitemap\Setup\Patch\Schema;
 
 use Magento\Framework\Setup\ModuleDataSetupInterface;
-use Magento\Framework\Setup\Patch\DataPatchInterface;
+use Magento\Framework\Setup\SchemaSetupInterface;
+use Magento\Framework\Setup\Patch\SchemaPatchInterface;
 use Magento\Framework\Setup\Patch\PatchRevertableInterface;
 
-class Recurring implements DataPatchInterface, PatchRevertableInterface
+class Recurring implements SchemaPatchInterface, PatchRevertableInterface
 {
 
     /**
-     * @var ModuleDataSetupInterface
+     * @var SchemaSetupInterface
      */
-    private $moduleDataSetup;
+    private $schemaSetup;
 
     /**
-     * @param ModuleDataSetupInterface $moduleDataSetup
+     * Constructor.
+     *
+     * @param SchemaSetupInterface $schemaSetup
      */
-    public function __construct(
-        ModuleDataSetupInterface $moduleDataSetup
-    ) {
-        $this->moduleDataSetup = $moduleDataSetup;
+    public function __construct(SchemaSetupInterface $schemaSetup)
+    {
+        $this->schemaSetup = $schemaSetup;
     }
 
     /**
@@ -34,7 +36,7 @@ class Recurring implements DataPatchInterface, PatchRevertableInterface
      */
     public function apply()
     {
-        $setup = $this->moduleDataSetup;
+        $setup = $this->schemaSetup;
         $setup->startSetup();
         $connection = $setup->getConnection();
 
