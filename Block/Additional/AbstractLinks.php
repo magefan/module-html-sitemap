@@ -30,28 +30,15 @@ abstract class AbstractLinks extends AbstractBlock
             $i = 0;
             $pageSize = $this->getPageSize();
             $collection = [];
-            $links = $this->config->getAdditionalLinks() ?: '';
-            $links = str_replace(["\n", "\r"], [PHP_EOL, PHP_EOL], $links);
-            $links = explode(PHP_EOL, $links);
+            $links = $this->config->getAdditionalLinks() ?: [];
             foreach ($links as $link) {
-                $link = trim($link);
-                $link = trim($link, '/');
-                if (!$link) {
-                    continue;
+                if (isset($link['url'])) {
+                    $collection[] = new DataObject([
+                        'url' => $link['url'],
+                        'name' => isset($link['title']) ? $link['title'] : $link['url']
+                    ]);
                 }
 
-                $linkData = explode('|', $link);
-
-                $url = trim($linkData[0]);
-
-                if (in_array($url, $this->config->getIgnoredLinks(null, false))) {
-                    continue;
-                }
-
-                $collection[] = new DataObject([
-                    'url' => $linkData[0],
-                    'name' => isset($linkData[1]) ? $linkData[1] : $linkData[0]
-                ]);
                 $i++;
 
                 if ($i >= $pageSize) {

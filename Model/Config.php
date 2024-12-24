@@ -12,6 +12,7 @@ namespace Magefan\HtmlSitemap\Model;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Module\ModuleListInterface;
+use Magento\Framework\Serialize\SerializerInterface;
 use Magento\Store\Model\ScopeInterface;
 
 class Config
@@ -62,13 +63,21 @@ class Config
     private $moduleList;
 
     /**
+     * @var SerializerInterface
+     */
+    private $serializer;
+
+    /**
+     * @param SerializerInterface $serializer
      * @param ScopeConfigInterface $scopeConfig
      * @param ModuleListInterface|null $moduleList
      */
     public function __construct(
+        SerializerInterface $serializer,
         ScopeConfigInterface $scopeConfig,
         ModuleListInterface $moduleList = null
     ) {
+        $this->serializer = $serializer;
         $this->scopeConfig = $scopeConfig;
         $this->moduleList = $moduleList ?: \Magento\Framework\App\ObjectManager::getInstance()
             ->get(ModuleListInterface::class);
@@ -186,11 +195,21 @@ class Config
 
     /**
      * @param null $storeId
-     * @return string
+     * @return array
      */
-    public function getAdditionalLinks($storeId = null): string
+    public function getAdditionalLinks($storeId = null): array
     {
-        return $this->getConfig('mfhs/additionallinks/links');
+        $data = $this->getConfig('mfhs/additionallinks/links', $storeId);
+
+        $additionalLinks = [];
+        if ($data) {
+            $values = $this->serializer->unserialize($data);
+            foreach ($values as $item) {
+                $additionalLinks[] = $item;
+            }
+        }
+        return $additionalLinks;
+
     }
 
     /**
