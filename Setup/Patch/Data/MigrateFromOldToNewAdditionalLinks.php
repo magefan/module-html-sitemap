@@ -64,14 +64,15 @@ class MigrateFromOldToNewAdditionalLinks implements DataPatchInterface, PatchVer
     {
         $this->moduleDataSetup->getConnection()->startSetup();
         foreach ($this->storeManager->getStores() as $store) {
-            $scope = ScopeInterface::SCOPE_STORE;
+            $scope = ScopeInterface::SCOPE_STORES;
             $scopeID = $store->getId();
             $links = $this->scopeConfig->getValue(
                 self::CONFIG_PATH_ADDITIONALLINKS,
                 $scope,
                 $store->getId()
             );
-            if (!$links) {
+
+            if (!$links || strpos('|',$links) === false) {
                 continue;
             }
             $links = str_replace(["\n", "\r"], [PHP_EOL, PHP_EOL], $links);
@@ -128,6 +129,6 @@ class MigrateFromOldToNewAdditionalLinks implements DataPatchInterface, PatchVer
 
     public static function getVersion()
     {
-        return "2.2.3";
+        return "2.0.4";
     }
 }
