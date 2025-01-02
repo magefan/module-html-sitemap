@@ -47,13 +47,28 @@ class DynamicRow extends AbstractFieldArray
                         \'jquery\',
                         \'Magento_Theme/js/sortable\'
                     ], function ($) {
-                        setTimeout(function () {
-                            $(\'#row_mfhs_additionallinks_links\').sortable({
+                        var element = $(\'#row_mfhs_additionallinks_links\');
+                        function applyChanges() {
+                            element.find(\'tbody\').find(\'tr\').each(function() {
+                                if (!$(this).find(\'.draggable-handle\').length) { 
+                                    var handle = $(\'<td><div class="draggable-handle" data-bind="afterRender: $data.initListeners"></div></td>\');
+                                    $(this).prepend(handle);
+                                }
+                            });
+                            element.find(\'tbody\').sortable({
                                 containment: "parent",
                                 items: \'tr\',
                                 tolerance: \'pointer\',
                             });
+                        }
+                        setTimeout(function () {
+                            element.find(\'tfoot\').find(\'.col-actions-add\').attr(\'colspan\', \'4\');
+                            element.find(\'thead\').find(\'tr\').prepend(\'<th></th>\');
+                            applyChanges();
                         }, 1000);
+                        $(\'.action-add\').on(\'click\', function() {
+                            applyChanges();
+                        });
                     });
                 });
             ';
