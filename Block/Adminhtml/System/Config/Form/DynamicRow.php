@@ -58,7 +58,7 @@ class DynamicRow extends AbstractFieldArray
                             element.find(\'tbody\').sortable({
                                 containment: "parent",
                                 items: \'tr\',
-                                tolerance: \'pointer\',
+                                tolerance: \'pointer\'
                             });
                         }
                         setTimeout(function () {
