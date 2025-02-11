@@ -32,10 +32,10 @@ abstract class AbstractLinks extends AbstractBlock
             $collection = [];
             $links = $this->config->getAdditionalLinks() ?: [];
             foreach ($links as $link) {
-                if (isset($link['url'])) {
+                if (!empty($link['url'])) {
                     $collection[] = new DataObject([
                         'url' => $link['url'],
-                        'name' => isset($link['title']) ? $link['title'] : $link['url']
+                        'name' => !empty($link['title']) ? $link['title'] : $link['url']
                     ]);
                 }
 
