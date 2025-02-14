@@ -8,53 +8,26 @@ declare(strict_types=1);
 
 namespace Magefan\HtmlSitemap\Setup\Patch\Data;
 
-use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
 use Magento\Framework\Setup\Patch\DataPatchInterface;
-use Magento\Framework\App\Config\Storage\WriterInterface;
 use Magento\Framework\Setup\Patch\PatchVersionInterface;
-use Magento\Store\Model\ScopeInterface;
-use Magento\Store\Model\StoreManagerInterface;
 
 class MigrateFromOldToNewAdditionalLinks implements DataPatchInterface, PatchVersionInterface
 {
     const CONFIG_PATH_ADDITIONALLINKS = 'mfhs/additionallinks/links';
+
     /**
      * @var ModuleDataSetupInterface
      */
     private $moduleDataSetup;
 
     /**
-     * @var WriterInterface
-     */
-    private $configWriter;
-
-    /**
-     * @var ScopeConfigInterface
-     */
-    private $scopeConfig;
-
-    /**
-     * @var StoreManagerInterface
-     */
-    private $storeManager;
-
-    /**
      * @param ModuleDataSetupInterface $moduleDataSetup
-     * @param WriterInterface $configWriter
-     * @param ScopeConfigInterface $scopeConfig
-     * @param StoreManagerInterface $storeManager
      */
     public function __construct(
-        ModuleDataSetupInterface $moduleDataSetup,
-        WriterInterface $configWriter,
-        ScopeConfigInterface $scopeConfig,
-        StoreManagerInterface $storeManager,
+        ModuleDataSetupInterface $moduleDataSetup
     ) {
         $this->moduleDataSetup = $moduleDataSetup;
-        $this->configWriter = $configWriter;
-        $this->scopeConfig = $scopeConfig;
-        $this->storeManager = $storeManager;
     }
 
     /**
@@ -63,19 +36,23 @@ class MigrateFromOldToNewAdditionalLinks implements DataPatchInterface, PatchVer
     public function apply()
     {
         $this->moduleDataSetup->getConnection()->startSetup();
-        foreach ($this->storeManager->getStores() as $store) {
-            $scope = ScopeInterface::SCOPE_STORES;
-            $scopeID = $store->getId();
-            $links = $this->scopeConfig->getValue(
-                self::CONFIG_PATH_ADDITIONALLINKS,
-                $scope,
-                $store->getId()
-            );
 
-            if (!$links || strpos('|',$links) === false) {
+        $connection = $this->moduleDataSetup->getConnection();
+
+        $table = $this->moduleDataSetup->getTable('core_config_data');
+        $select = $connection->select()
+            ->from($table)
+            ->where('path LIKE ?', self::CONFIG_PATH_ADDITIONALLINKS);
+
+        $allData = $connection->fetchAll($select);
+
+        foreach ($allData as $data) {
+            $links = $data['value'];
+
+            if (!$links || strpos($links, '|')  === false) {
                 continue;
             }
-            $links = str_replace(["\n", "\r"], [PHP_EOL, PHP_EOL], $links);
+            $links = str_replace(["\r\n", "\n\r", "\r", "\n"], [PHP_EOL, PHP_EOL, PHP_EOL, PHP_EOL], $links);
             $links = explode(PHP_EOL, $links);
 
             $newLinks = [];
@@ -99,13 +76,14 @@ class MigrateFromOldToNewAdditionalLinks implements DataPatchInterface, PatchVer
                 }
             }
 
-            if ($store->getCode() == 'default')
-            {
-                $scope = ScopeConfigInterface::SCOPE_TYPE_DEFAULT;
-                $scopeID = null;
-            }
-
-            $this->configWriter->save(self::CONFIG_PATH_ADDITIONALLINKS, json_encode($newLinks),$scope,$scopeID);
+            $connection->update(
+                $table,
+                ['value' => json_encode($newLinks)],
+                [
+                    'path = ?' => self::CONFIG_PATH_ADDITIONALLINKS,
+                    'config_id = ?' => $data['config_id']
+                ]
+            );
         }
 
         $this->moduleDataSetup->getConnection()->endSetup();
