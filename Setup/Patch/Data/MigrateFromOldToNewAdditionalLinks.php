@@ -50,7 +50,8 @@ class MigrateFromOldToNewAdditionalLinks implements DataPatchInterface, PatchVer
             $links = $data['value'];
 
             if (!$links || strpos($links, '|')  === false) {
-                continue;
+//                continue;
+                $connection->delete($table, ['config_id = ?' => $data['config_id']]);
             }
             $links = str_replace(["\r\n", "\n\r", "\r", "\n"], [PHP_EOL, PHP_EOL, PHP_EOL, PHP_EOL], $links);
             $links = explode(PHP_EOL, $links);
@@ -80,11 +81,10 @@ class MigrateFromOldToNewAdditionalLinks implements DataPatchInterface, PatchVer
                 $connection->update(
                     $table,
                     ['value' => json_encode($newLinks)],
-                    [
-                        'path = ?' => self::CONFIG_PATH_ADDITIONALLINKS,
-                        'config_id = ?' => $data['config_id']
-                    ]
+                    ['config_id = ?' => $data['config_id']]
                 );
+            } else {
+                $connection->delete($table, ['config_id = ?' => $data['config_id']]);
             }
 
         }
