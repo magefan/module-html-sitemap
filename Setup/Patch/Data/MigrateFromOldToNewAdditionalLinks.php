@@ -76,14 +76,17 @@ class MigrateFromOldToNewAdditionalLinks implements DataPatchInterface, PatchVer
                 }
             }
 
-            $connection->update(
-                $table,
-                ['value' => json_encode($newLinks)],
-                [
-                    'path = ?' => self::CONFIG_PATH_ADDITIONALLINKS,
-                    'config_id = ?' => $data['config_id']
-                ]
-            );
+            if (!empty($newLinks)) {
+                $connection->update(
+                    $table,
+                    ['value' => json_encode($newLinks)],
+                    [
+                        'path = ?' => self::CONFIG_PATH_ADDITIONALLINKS,
+                        'config_id = ?' => $data['config_id']
+                    ]
+                );
+            }
+
         }
 
         $this->moduleDataSetup->getConnection()->endSetup();
