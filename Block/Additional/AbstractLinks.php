@@ -30,7 +30,7 @@ abstract class AbstractLinks extends AbstractBlock
             $i = 0;
             $pageSize = $this->getPageSize();
             $collection = [];
-            $links = $this->config->getAdditionalLinks() ?: [];
+            $links = $this->config->getAdditionalLinks();
             foreach ($links as $link) {
                 if (!empty($link['url'])) {
                     $collection[] = new DataObject([
@@ -44,7 +44,6 @@ abstract class AbstractLinks extends AbstractBlock
                 if ($i >= $pageSize) {
                     break;
                 }
-
             }
 
             $this->setData($k, $collection);

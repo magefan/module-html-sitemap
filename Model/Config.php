@@ -68,19 +68,20 @@ class Config
     private $serializer;
 
     /**
-     * @param SerializerInterface $serializer
      * @param ScopeConfigInterface $scopeConfig
      * @param ModuleListInterface|null $moduleList
+     * @param SerializerInterface|null $serializer
      */
     public function __construct(
-        SerializerInterface $serializer,
         ScopeConfigInterface $scopeConfig,
-        ModuleListInterface $moduleList = null
+        ModuleListInterface $moduleList = null,
+        SerializerInterface $serializer = null
     ) {
-        $this->serializer = $serializer;
         $this->scopeConfig = $scopeConfig;
         $this->moduleList = $moduleList ?: \Magento\Framework\App\ObjectManager::getInstance()
             ->get(ModuleListInterface::class);
+        $this->serializer = $serializer ?: \Magento\Framework\App\ObjectManager::getInstance()
+            ->get(SerializerInterface::class);
     }
 
     /**
@@ -200,16 +201,12 @@ class Config
     public function getAdditionalLinks($storeId = null): array
     {
         $data = $this->getConfig('mfhs/additionallinks/links', $storeId);
-
-        $additionalLinks = [];
         if ($data) {
-            $values = $this->serializer->unserialize($data);
-            foreach ($values as $item) {
-                $additionalLinks[] = $item;
-            }
+            $additionalLinks = array_values($this->serializer->unserialize($data));
+        } else {
+            $additionalLinks = [];
         }
         return $additionalLinks;
-
     }
 
     /**
