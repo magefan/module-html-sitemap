@@ -11,13 +11,14 @@ namespace Magefan\HtmlSitemap\Block\Adminhtml\System\Config\Form\Field;
 use Magento\Framework\View\Element\Html\Select;
 
 use Magento\Backend\Block\Template\Context;
+
 class FrequencyColumn extends Select
 {
     public function __construct(
         \Magento\Sitemap\Model\Config\Source\Frequency $frequency,
         Context $context,
-        array $data = [])
-    {
+        array $data = []
+    ) {
         $this->_frequency = $frequency;
         parent::__construct($context, $data);
     }

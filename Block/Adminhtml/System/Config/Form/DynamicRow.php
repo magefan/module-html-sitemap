@@ -7,9 +7,7 @@
 namespace Magefan\HtmlSitemap\Block\Adminhtml\System\Config\Form;
 
 use Magento\Config\Block\System\Config\Form\Field\FieldArray\AbstractFieldArray;
-/**
- * Class DynamicRow
- */
+
 class DynamicRow extends AbstractFieldArray
 {
 
