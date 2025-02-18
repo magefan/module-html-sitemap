@@ -58,7 +58,7 @@ class DynamicRow extends AbstractFieldArray
                                 items: \'tr\',
                                 tolerance: \'pointer\'
                             });
-                        }
+                        };
                         setTimeout(function () {
                             element.find(\'tfoot\').find(\'.col-actions-add\').attr(\'colspan\', \'4\');
                             element.find(\'thead\').find(\'tr\').prepend(\'<th></th>\');
