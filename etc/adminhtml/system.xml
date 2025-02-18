@@ -153,9 +153,6 @@
                     <frontend_class>remove_label</frontend_class>
                     <frontend_model>Magefan\HtmlSitemap\Block\Adminhtml\System\Config\Form\DynamicRow</frontend_model>
                     <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
-                    <depends>
-                        <field id="displaylinks">1</field>
-                    </depends>
                 </field>
                 <field id="title" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Block Title</label>
