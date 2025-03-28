@@ -69,7 +69,7 @@ class MigrateFromOldToNewAdditionalLinks implements DataPatchInterface, PatchVer
                     $url = trim($linkData[0]);
                     $timestamp = round(microtime(true) * 1000);
                     $milliseconds = $timestamp % 1000;
-                    $result = '_' . $timestamp . '_' . $milliseconds + $key;
+                    $result = '_' . $timestamp . '_' . ($milliseconds + $key);
                     $newLinks[$result] = [
                         'url' => $url,
                         'title' => isset($linkData[1]) ? $linkData[1] : $url,
