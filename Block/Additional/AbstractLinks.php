@@ -12,7 +12,6 @@ namespace Magefan\HtmlSitemap\Block\Additional;
 
 use Magento\Framework\DataObject;
 use Magefan\HtmlSitemap\Block\AbstractBlock;
-use function PHPUnit\Framework\exactly;
 
 abstract class AbstractLinks extends AbstractBlock
 {
