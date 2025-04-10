@@ -12,6 +12,7 @@ namespace Magefan\HtmlSitemap\Block\Additional;
 
 use Magento\Framework\DataObject;
 use Magefan\HtmlSitemap\Block\AbstractBlock;
+use function PHPUnit\Framework\exactly;
 
 abstract class AbstractLinks extends AbstractBlock
 {
@@ -28,9 +29,9 @@ abstract class AbstractLinks extends AbstractBlock
         $k = 'collection';
         if (null === $this->getData($k)) {
             $i = 0;
-            $pageSize = $this->getPageSize();
             $collection = [];
             $links = $this->config->getAdditionalLinks();
+            $pageSize = ($this->_request->getFullActionName() == 'htmlsitemap_additional_links') ? count($links) : $this->getPageSize();
             foreach ($links as $link) {
                 if (!empty($link['url'])) {
                     $collection[] = new DataObject([
