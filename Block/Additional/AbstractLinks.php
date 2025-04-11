@@ -28,8 +28,8 @@ abstract class AbstractLinks extends AbstractBlock
         $k = 'collection';
         if (null === $this->getData($k)) {
             $i = 0;
-            $collection = [];
             $pageSize = $this->getPageSize();
+            $collection = [];
             $links = $this->config->getAdditionalLinks();
             foreach ($links as $link) {
                 if (!empty($link['url'])) {
