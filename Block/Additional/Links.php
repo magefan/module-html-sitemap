@@ -13,4 +13,20 @@ namespace Magefan\HtmlSitemap\Block\Additional;
 class Links extends AbstractLinks
 {
     use \Magefan\HtmlSitemap\Block\Type\Block;
+
+    /**
+     * @return int
+     */
+    protected function getPageSize(): int
+    {
+        return count($this->config->getAdditionalLinks());
+    }
+
+    /**
+     * @return bool
+     */
+    public function showViewMore(): bool
+    {
+        return false;
+    }
 }

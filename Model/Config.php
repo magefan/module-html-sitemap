@@ -47,6 +47,12 @@ class Config
      */
     const XML_PATH_BLOG_EXTENSION_ENABLED = 'mfblog/general/enabled';
 
+
+    /**
+     * @var null
+     */
+    protected $additionalLinks = null;
+
     /**
      * @var ScopeConfigInterface
      */
@@ -200,13 +206,16 @@ class Config
      */
     public function getAdditionalLinks($storeId = null): array
     {
-        $data = $this->getConfig('mfhs/additionallinks/links', $storeId);
-        if ($data) {
-            $additionalLinks = array_values($this->serializer->unserialize($data));
-        } else {
-            $additionalLinks = [];
+        if ($this->additionalLinks == null) {
+            $data = $this->getConfig('mfhs/additionallinks/links', $storeId);
+            if ($data) {
+                $this->additionalLinks = array_values($this->serializer->unserialize($data));
+            } else {
+                $this->additionalLinks = [];
+            }
         }
-        return $additionalLinks;
+
+        return $this->additionalLinks;
     }
 
     /**

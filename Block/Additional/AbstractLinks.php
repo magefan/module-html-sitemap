@@ -29,8 +29,8 @@ abstract class AbstractLinks extends AbstractBlock
         if (null === $this->getData($k)) {
             $i = 0;
             $collection = [];
+            $pageSize = $this->getPageSize();
             $links = $this->config->getAdditionalLinks();
-            $pageSize = ($this->_request->getFullActionName() == 'htmlsitemap_additional_links') ? count($links) : $this->getPageSize();
             foreach ($links as $link) {
                 if (!empty($link['url'])) {
                     $collection[] = new DataObject([
