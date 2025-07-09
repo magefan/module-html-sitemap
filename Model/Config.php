@@ -74,8 +74,8 @@ class Config
      */
     public function __construct(
         ScopeConfigInterface $scopeConfig,
-        ModuleListInterface $moduleList = null,
-        SerializerInterface $serializer = null
+        ?ModuleListInterface $moduleList = null,
+        ?SerializerInterface $serializer = null
     ) {
         $this->scopeConfig = $scopeConfig;
         $this->moduleList = $moduleList ?: \Magento\Framework\App\ObjectManager::getInstance()
