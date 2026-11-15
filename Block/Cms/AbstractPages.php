@@ -58,8 +58,9 @@ abstract class AbstractPages extends AbstractBlock
             $items = $this->pageCollectionFactory->create()
                 ->addFieldToFilter('is_active', 1)
                 ->addStoreFilter($this->_storeManager->getStore()->getId());
-            if (!empty($this->ignoredLinks)) {
-                $items->addFieldToFilter('identifier', ['nin' => $this->config->getIgnoredLinks()]);
+            $ignoredLinks = $this->config->getIgnoredLinks();
+            if (!empty($ignoredLinks)) {
+                $items->addFieldToFilter('identifier', ['nin' => $ignoredLinks]);
             }
 
             $items->addFieldToFilter('mf_exclude_html_sitemap', 0);
