@@ -81,8 +81,9 @@ abstract class AbstractProducts extends AbstractBlock
             $items = $this->productCollectionFactory->create()
                 ->addAttributeToSelect('name')
                 ->addAttributeToFilter('status', ['in' => $this->status->getVisibleStatusIds()]);
-            if (!empty($this->ignoredLinks)) {
-                $items->addAttributeToFilter('url_key', ['nin' => $this->config->getIgnoredLinks()]);
+            $ignoredLinks = $this->config->getIgnoredLinks();
+            if (!empty($ignoredLinks)) {
+                $items->addAttributeToFilter('url_key', ['nin' => $ignoredLinks]);
             }
 
             if ($this->getExcludedProductsIds()) {
